@@ -36,7 +36,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
+# Add space after the description
+st.markdown("<br><br>", unsafe_allow_html=True)
 # Load data
 @st.cache_data
 def load_data():
