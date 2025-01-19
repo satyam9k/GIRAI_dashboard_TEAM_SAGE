@@ -6,7 +6,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Set page config
+#page config
 st.set_page_config(layout="wide", page_title="Responsible AI Data Visualization Challenge Dashboard")
 
 #title and description
@@ -36,10 +36,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Add space after the description
-#st.markdown("<br>", unsafe_allow_html=True)
-
-# Add a grey line after the description
 st.markdown('<hr style="border: 1px solid grey;"/>', unsafe_allow_html=True)
 
 # Load data
@@ -153,8 +149,6 @@ with col2:
     # Display the chart
     st.plotly_chart(fig_dev, use_container_width=True)
 
-
-
 # Create second row with columns
 col3, col4, col5 = st.columns([1, 1, .75])
 
@@ -223,25 +217,19 @@ with col3:
     
     filtered_data = data_df[data_df['thematic_area'].isin(thematic_areas_to_include)]
     
-    # Merge with the rankings dataframe to get development status
     development_analysis = filtered_data.merge(
         rankings_df[['Country', 'Development_Status']],
         left_on='country',
         right_on='Country'
     )
-    
-    # Filter out "Other" from Development_Status
+
     development_analysis = development_analysis[development_analysis['Development_Status'] != "Other"]
-    
-    # Reorder the Development_Status to have 'Developed' on top, 'Developing' in the middle, and 'Underdeveloped' at the bottom
     ordered_status = ['Developed', 'Developing', 'Underdeveloped']
     development_analysis['Development_Status'] = pd.Categorical(
         development_analysis['Development_Status'],
         categories=ordered_status,
         ordered=True
     )
-    
-    # Create pivot table for thematic area scores by development status
     thematic_by_development = pd.pivot_table(
         development_analysis,
         values='ta_score',
@@ -249,8 +237,7 @@ with col3:
         columns='thematic_area',
         aggfunc='mean'
     )
-    
-    # Create heatmap using plotly with updated color scale (Red for low score, Blue for high score)
+
     fig_heatmap = go.Figure(data=go.Heatmap(
         z=thematic_by_development.values,
         x=thematic_by_development.columns,
@@ -258,12 +245,11 @@ with col3:
         text=np.round(thematic_by_development.values, 2),
         texttemplate='%{text}',
         textfont={"size": 10},
-        colorscale='RdBu',  # Red for low scores, Blue for high scores
+        colorscale='RdBu',  
         showscale=True,
         hoverongaps=False
     ))
 
-    # Update layout to include axis labels and adjust the appearance
     fig_heatmap.update_layout(
         margin=dict(l=0, r=0, t=30, b=0),
         xaxis=dict(
@@ -278,6 +264,7 @@ with col3:
 
 
 
+# 4. Key Metrics Comparison
 # 4. Key Metrics Comparison
 
 with col4:
@@ -326,43 +313,86 @@ with col4:
             bgcolor='black'
         ),
         showlegend=True,
+        legend=dict(
+            x=1,  # Position on the right edge
+            y=0,  # Position at the bottom
+            xanchor='right',
+            yanchor='bottom',
+            font=dict(size=10, color='white'),
+            bgcolor='rgba(0,0,0,0)',  # Transparent background for the legend
+        ),
         margin=dict(l=0, r=0, t=30, b=0)
     )
     
     # Render the chart
     st.plotly_chart(fig_spider, use_container_width=True)
+# with col4:
+#     st.subheader("Key Metrics Comparison for Focus Countries")
 
+#     selected_countries = ['United States of America', 'India', 'Afghanistan']
 
-# Add footer with a hyperlink to the data source
-# st.markdown("""
-# ---
-# Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)  
+#     categories = ['Index score', 'PILLAR SCORES', 'DIMENSION SCORES']
+#     category_aliases = ['Index Score', 'Pillar Score', 'Dimension Score']
+#     country_colors = {
+#         'United States of America': 'red',
+#         'India': 'blue',
+#         'Afghanistan': 'yellow'
+#     }
+#     fig_spider = go.Figure()
+    
+#     for country in selected_countries:
+#         values = rankings_df[rankings_df['Country'] == country][categories].values[0]
 
-# Designed and Developed by:  
-# [Satyam Kumar](https://www.linkedin.com/in/satyamkumar09/) | [Priyansha Upadhyay](https://www.linkedin.com/in/priyansha1306/) | [Jaanavi V] (https://www.linkedin.com/in/jaanavi-vemana-b21966256/)  
+#         fig_spider.add_trace(go.Scatterpolar(
+#             r=values,
+#             theta=category_aliases,
+#             name=country,
+#             fill='toself',
+#             line=dict(color=country_colors[country]),
+#             text=[f"{v:.1f}" for v in values],
+#             textposition='top center',
+#             textfont=dict(color='white', size=14),
+#             mode='lines+markers+text'
+#         ))
 
-# Guided by:  
-# [Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
-# """)
-# Create two columns: One for data source (on the left) and the other for design/develop and guidance (on the right)
-col1, col2 = st.columns([3, 1])  # You can adjust the ratio of the columns if needed
+#     fig_spider.update_layout(
+#     polar=dict(
+#         radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
+#         angularaxis=dict(
+#             rotation=247,  # Start angle for the first category (optional adjustment)
+#             direction="clockwise",  # Rotate clockwise
+#         ),
+#         bgcolor='black'
+#     ),
+#     showlegend=True,
+#     legend=dict(
+#         x=1,  # Position on the right edge
+#         y=0,  # Position at the bottom
+#         xanchor='right',
+#         yanchor='bottom',
+#         font=dict(size=10, color='white'),
+#         bgcolor='rgba(0,0,0,0)',  # Transparent background for the legend
+#     ),
+#     margin=dict(l=0, r=0, t=30, b=0)
+# )
+    
+#     # Render the chart
+#     st.plotly_chart(fig_spider, use_container_width=True)
+
+col1, col2 = st.columns([3, 1]) 
 
 with col1:
-    # Data Source section on the left
     st.markdown("""
     ---
     Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)
     """)
 
 with col2:
-     # Designed and Developed by section on the right side, lower position
     st.markdown("""
     ---
     Designed and Developed by:  
     [Satyam Kumar](https://www.linkedin.com/in/satyamkumar09/) | [Priyansha Upadhyay](https://www.linkedin.com/in/priyansha1306/) | [Jaanavi V](https://www.linkedin.com/in/jaanavi-vemana-b21966256/)  
     """)
-
-    # Guided by section on the right side, lower position
     st.markdown("""
     Guided by:  
     [Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
