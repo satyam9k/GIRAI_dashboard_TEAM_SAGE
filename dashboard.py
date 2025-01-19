@@ -265,31 +265,27 @@ with col3:
 
 
 # 4. Key Metrics Comparison
-# 4. Key Metrics Comparison
 
 with col4:
     st.subheader("Key Metrics Comparison for Focus Countries")
-
+    
     selected_countries = ['United States of America', 'India', 'Afghanistan']
 
     categories = ['Index score', 'PILLAR SCORES', 'DIMENSION SCORES']
     category_aliases = ['Index Score', 'Pillar Score', 'Dimension Score']
-    
-    # Create color map for countries
+
     country_colors = {
         'United States of America': 'red',
         'India': 'blue',
         'Afghanistan': 'yellow'
     }
-    
-    # Create the figure for the spider plot
+
     fig_spider = go.Figure()
     
     for country in selected_countries:
-        # Get the values for the selected country
+
         values = rankings_df[rankings_df['Country'] == country][categories].values[0]
 
-        # Add the trace for the country with custom color
         fig_spider.add_trace(go.Scatterpolar(
             r=values,
             theta=category_aliases,
@@ -301,83 +297,22 @@ with col4:
             textfont=dict(color='white', size=14),
             mode='lines+markers+text'
         ))
-    
-    # Update the layout for the spider plot
+
     fig_spider.update_layout(
         polar=dict(
             radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
             angularaxis=dict(
-                rotation=247,  # Start angle for the first category (optional adjustment)
-                direction="clockwise",  # Rotate clockwise
+                rotation=247,  
+                direction="clockwise", 
             ),
             bgcolor='black'
         ),
         showlegend=True,
-        legend=dict(
-            x=1,  # Position on the right edge
-            y=0,  # Position at the bottom
-            xanchor='right',
-            yanchor='bottom',
-            font=dict(size=10, color='white'),
-            bgcolor='rgba(0,0,0,0)',  # Transparent background for the legend
-        ),
         margin=dict(l=0, r=0, t=30, b=0)
     )
     
     # Render the chart
     st.plotly_chart(fig_spider, use_container_width=True)
-# with col4:
-#     st.subheader("Key Metrics Comparison for Focus Countries")
-
-#     selected_countries = ['United States of America', 'India', 'Afghanistan']
-
-#     categories = ['Index score', 'PILLAR SCORES', 'DIMENSION SCORES']
-#     category_aliases = ['Index Score', 'Pillar Score', 'Dimension Score']
-#     country_colors = {
-#         'United States of America': 'red',
-#         'India': 'blue',
-#         'Afghanistan': 'yellow'
-#     }
-#     fig_spider = go.Figure()
-    
-#     for country in selected_countries:
-#         values = rankings_df[rankings_df['Country'] == country][categories].values[0]
-
-#         fig_spider.add_trace(go.Scatterpolar(
-#             r=values,
-#             theta=category_aliases,
-#             name=country,
-#             fill='toself',
-#             line=dict(color=country_colors[country]),
-#             text=[f"{v:.1f}" for v in values],
-#             textposition='top center',
-#             textfont=dict(color='white', size=14),
-#             mode='lines+markers+text'
-#         ))
-
-#     fig_spider.update_layout(
-#     polar=dict(
-#         radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
-#         angularaxis=dict(
-#             rotation=247,  # Start angle for the first category (optional adjustment)
-#             direction="clockwise",  # Rotate clockwise
-#         ),
-#         bgcolor='black'
-#     ),
-#     showlegend=True,
-#     legend=dict(
-#         x=1,  # Position on the right edge
-#         y=0,  # Position at the bottom
-#         xanchor='right',
-#         yanchor='bottom',
-#         font=dict(size=10, color='white'),
-#         bgcolor='rgba(0,0,0,0)',  # Transparent background for the legend
-#     ),
-#     margin=dict(l=0, r=0, t=30, b=0)
-# )
-    
-#     # Render the chart
-#     st.plotly_chart(fig_spider, use_container_width=True)
 
 col1, col2 = st.columns([3, 1]) 
 
