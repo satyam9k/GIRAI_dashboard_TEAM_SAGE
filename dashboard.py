@@ -376,7 +376,7 @@ with col2:
     """)
 
 # Optionally, you can add some custom space to push col2 down further if needed
-st.markdown("<br><br><br><br>", unsafe_allow_html=True)  # Adds more vertical space
+st.markdown("<br><br><br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)  # Adds more vertical space
 
 
 
