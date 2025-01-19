@@ -303,13 +303,14 @@ with col4:
             angularaxis=dict(
                 rotation=247,  
                 direction="clockwise", 
+                domain=[0, 1]
             ),
             bgcolor='black'
         ),
         showlegend=True,
         legend=dict(
             yanchor="top",    # anchor point for y
-            y=-0.1,          # position below the chart
+            y=-0.5,          # position below the chart
             xanchor="left",   # anchor point for x
             x=0.8              # keep same horizontal position as original
         ),
