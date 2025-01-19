@@ -309,7 +309,7 @@ with col4:
         showlegend=True,
         legend=dict(
             yanchor="top",    # anchor point for y
-            y=0.1,          # position below the chart
+            y=-0.1,          # position below the chart
             xanchor="left",   # anchor point for x
             x=1              # keep same horizontal position as original
         ),
