@@ -339,16 +339,33 @@ with col4:
 
 
 # Add footer with a hyperlink to the data source
-st.markdown("""
----
-Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)  
+# st.markdown("""
+# ---
+# Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)  
 
-Designed and Developed by:  
-[Satyam Kumar](https://www.linkedin.com/in/satyamkumar09/) | [Priyansha Upadhyay](https://www.linkedin.com/in/priyansha1306/) | [Jaanavi V]  
+# Designed and Developed by:  
+# [Satyam Kumar](https://www.linkedin.com/in/satyamkumar09/) | [Priyansha Upadhyay](https://www.linkedin.com/in/priyansha1306/) | [Jaanavi V] (https://www.linkedin.com/in/jaanavi-vemana-b21966256/)  
 
-Guided by:  
-[Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
-""")
+# Guided by:  
+# [Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
+# """)
+col1, col2 = st.columns([1, 2])  # Creates two columns, with the second column being wider
+
+with col1:
+    st.markdown("""
+    ---
+    Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)
+    """)
+
+with col2:
+    st.markdown("""
+    Designed and Developed by:  
+    [Satyam Kumar](https://www.linkedin.com/in/satyamkumar09/) | [Priyansha Upadhyay](https://www.linkedin.com/in/priyansha1306/) | [Jaanavi V](https://www.linkedin.com/in/jaanavi-vemana-b21966256/)  
+
+    Guided by:  
+    [Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
+    """)
+
 
 
 
