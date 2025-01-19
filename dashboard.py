@@ -361,7 +361,7 @@ with col1:
 
 with col2:
     # Leave this first row in col2 empty for alignment
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown( unsafe_allow_html=True)
     
     # Designed and Developed by section on the right side, lower position
     st.markdown("""
