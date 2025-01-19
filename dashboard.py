@@ -313,7 +313,7 @@ with col4:
             xanchor="left",   # anchor point for x
             x=1              # keep same horizontal position as original
         ),
-        margin=dict(l=0, r=0, t=30, b=10)  # increased bottom margin to accommodate legend
+        margin=dict(l=0, r=0, t=30, b=0)  # increased bottom margin to accommodate legend
     )      
 
     # fig_spider.update_layout(
