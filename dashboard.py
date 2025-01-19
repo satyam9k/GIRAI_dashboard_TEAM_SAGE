@@ -357,6 +357,9 @@ with col1:
     Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)
     """)
 
+# Adding an empty row to push col2 lower down
+st.empty()
+
 with col2:
     st.markdown("""
     Designed and Developed by:  
