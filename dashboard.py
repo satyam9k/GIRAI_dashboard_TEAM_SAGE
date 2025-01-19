@@ -341,10 +341,6 @@ with col3:
     # Update layout to include axis labels and adjust the appearance
     fig_heatmap.update_layout(
         margin=dict(l=0, r=0, t=30, b=0),
-        xaxis=dict(
-            title='Thematic Areas',  # Label for the x-axis
-            tickangle=45
-        ),
         yaxis=dict(
             title='Development Status'  # Label for the y-axis
         ),
