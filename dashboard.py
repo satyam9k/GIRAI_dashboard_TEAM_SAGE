@@ -32,7 +32,7 @@ st.markdown(
 
 st.markdown('<div class="centered-title">Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="centered-text">This dashboard visualizes various aspects of global Responsible AI maturity across different regions and development statuses.</div>',
+    '<div class="centered-text">Discover the stark contrasts in how regions adopt and implement responsible AI principles. This visualization uncovers the global divide, spotlighting regions leading the way, those lagging behind, and the critical thematic areas demanding urgent attention to ensure an equitable AI future.</div>',
     unsafe_allow_html=True
 )
 
@@ -203,7 +203,6 @@ with col5:
 with col3:
     st.subheader("Thematic Area Scores by Development Status")
     
-    # Define the thematic areas to be included
     thematic_areas_to_include = [
         "Access to Remedy and Redress",
         "Children's Rights",
@@ -217,7 +216,6 @@ with col3:
         "Transparency and Explainability"
     ]
     
-    # Filter the data to only include the specified thematic areas
     filtered_data = data_df[data_df['thematic_area'].isin(thematic_areas_to_include)]
     
     # Merge with the rankings dataframe to get development status
