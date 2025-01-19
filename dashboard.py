@@ -311,7 +311,7 @@ with col4:
             yanchor="top",    # anchor point for y
             y=-0.1,          # position below the chart
             xanchor="left",   # anchor point for x
-            x=1              # keep same horizontal position as original
+            x=0.8              # keep same horizontal position as original
         ),
         margin=dict(l=0, r=0, t=30, b=0)  # increased bottom margin to accommodate legend
     )      
