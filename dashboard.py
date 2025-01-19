@@ -297,7 +297,7 @@ with col4:
             textfont=dict(color='white', size=14),
             mode='lines+markers+text'
         ))
-      fig_spider.update_layout(
+    fig_spider.update_layout(
         polar=dict(
             radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
             angularaxis=dict(
@@ -314,7 +314,7 @@ with col4:
             x=1              # keep same horizontal position as original
         ),
         margin=dict(l=0, r=0, t=30, b=50)  # increased bottom margin to accommodate legend
-    )
+    )      
 
     # fig_spider.update_layout(
     #     polar=dict(
@@ -329,7 +329,7 @@ with col4:
     #     margin=dict(l=0, r=0, t=30, b=0)
     # )
     
-    # # Render the chart
+    # Render the chart
     st.plotly_chart(fig_spider, use_container_width=True)
 
 col1, col2 = st.columns([3, 1]) 
