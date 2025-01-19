@@ -46,8 +46,8 @@ st.markdown(
 # Load data
 @st.cache_data
 def load_data():
-    rankings_df = pd.read_excel('GIRAI_2024_Edition_Data.xlsx', sheet_name='Rankings and Scores')
-    data_df = pd.read_excel('GIRAI_2024_Edition_Data.xlsx', sheet_name='Data')
+    rankings_df = pd.read_excel('data/GIRAI_2024_Edition_Data.xlsx', sheet_name='Rankings and Scores')
+    data_df = pd.read_excel('data/GIRAI_2024_Edition_Data.xlsx', sheet_name='Data')
     
     # Data preprocessing
     numeric_columns = ['Index score', 'ta_score', 'fr_weighted_score',
