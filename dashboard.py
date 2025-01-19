@@ -211,6 +211,73 @@ with col5:
 
 # 3. Thematic Focus by Development Status
 
+# with col3:
+#     st.subheader("Thematic Area Scores by Development Status")
+    
+#     # Define the thematic areas to be included
+#     thematic_areas_to_include = [
+#         "Access to Remedy and Redress",
+#         "Children's Rights",
+#         "Data Protection and Privacy",
+#         "Gender Equality",
+#         "International Cooperation",
+#         "Labour Protection and Right to Work",
+#         "National AI Policy",
+#         "Public Participation and Awareness",
+#         "Responsibility and Accountability",
+#         "Transparency and Explainability"
+#     ]
+    
+#     # Filter the data to only include the specified thematic areas
+#     filtered_data = data_df[data_df['thematic_area'].isin(thematic_areas_to_include)]
+    
+#     # Merge with the rankings dataframe to get development status
+#     development_analysis = filtered_data.merge(
+#         rankings_df[['Country', 'Development_Status']],
+#         left_on='country',
+#         right_on='Country'
+#     )
+    
+#     # Filter out "Other" from Development_Status
+#     development_analysis = development_analysis[development_analysis['Development_Status'] != "Other"]
+    
+#     # Reorder the Development_Status to have 'Developed' on top, 'Developing' in the middle, and 'Underdeveloped' at the bottom
+#     ordered_status = ['Developed', 'Developing', 'Underdeveloped']
+#     development_analysis['Development_Status'] = pd.Categorical(
+#         development_analysis['Development_Status'],
+#         categories=ordered_status,
+#         ordered=True
+#     )
+    
+#     # Create pivot table for thematic area scores by development status
+#     thematic_by_development = pd.pivot_table(
+#         development_analysis,
+#         values='ta_score',
+#         index='Development_Status',
+#         columns='thematic_area',
+#         aggfunc='mean'
+#     )
+    
+#     # Create heatmap using plotly with updated color scale (Red for low score, Blue for high score)
+#     fig_heatmap = go.Figure(data=go.Heatmap(
+#         z=thematic_by_development.values,
+#         x=thematic_by_development.columns,
+#         y=thematic_by_development.index,
+#         text=np.round(thematic_by_development.values, 2),
+#         texttemplate='%{text}',
+#         textfont={"size": 10},
+#         colorscale='RdBu',  # Red for low scores, Blue for high scores
+#         showscale=True,
+#         hoverongaps=False
+#     ))
+
+#     fig_heatmap.update_layout(
+#         margin=dict(l=0, r=0, t=30, b=0),
+#         xaxis={'tickangle': 45},
+#         height=400
+#     )
+
+#     st.plotly_chart(fig_heatmap, use_container_width=True)
 with col3:
     st.subheader("Thematic Area Scores by Development Status")
     
@@ -271,13 +338,21 @@ with col3:
         hoverongaps=False
     ))
 
+    # Update layout to include axis labels and adjust the appearance
     fig_heatmap.update_layout(
         margin=dict(l=0, r=0, t=30, b=0),
-        xaxis={'tickangle': 45},
+        xaxis=dict(
+            title='Thematic Areas',  # Label for the x-axis
+            tickangle=45
+        ),
+        yaxis=dict(
+            title='Development Status'  # Label for the y-axis
+        ),
         height=400
     )
 
     st.plotly_chart(fig_heatmap, use_container_width=True)
+
 
 
 
