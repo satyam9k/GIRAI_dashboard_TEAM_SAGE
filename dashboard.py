@@ -361,7 +361,7 @@ with col1:
 
 with col2:
     # Leave this first row in col2 empty for alignment
-    st.markdown("<br><br><br>", unsafe_allow_html=True)
+    st.markdown("<br><br>", unsafe_allow_html=True)
     
     # Designed and Developed by section on the right side, lower position
     st.markdown("""
@@ -376,7 +376,7 @@ with col2:
     """)
 
 # Optionally, you can add some custom space to push col2 down further if needed
-st.markdown("<br><br>", unsafe_allow_html=True)  # Adds more vertical space
+st.markdown("<br><br><br><br>", unsafe_allow_html=True)  # Adds more vertical space
 
 
 
