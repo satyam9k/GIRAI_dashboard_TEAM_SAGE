@@ -308,15 +308,6 @@ with col4:
             bgcolor='black'
         ),
         showlegend=True,
-        legend=dict(
-            x=1,  # Position on the right edge
-            y=0,  # Position at the bottom
-            xanchor='right',
-            yanchor='bottom',
-            font=dict(size=10, color='white'),
-            bgcolor='rgba(0,0,0,0)',  # Transparent background for the legend
-        ),        
-        # showlegend=True,
         margin=dict(l=0, r=0, t=30, b=0)
     )
     
