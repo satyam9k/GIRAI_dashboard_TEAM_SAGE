@@ -350,7 +350,7 @@ with col4:
 # [Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
 # """)
 # Create two columns: One for data source (on the left) and the other for design/develop and guidance (on the right)
-col1, col2 = st.columns([1, 1])  # You can adjust the ratio of the columns if needed
+col1, col2 = st.columns([3, 1])  # You can adjust the ratio of the columns if needed
 
 with col1:
     # Data Source section on the left
