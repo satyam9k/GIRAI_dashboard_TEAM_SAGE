@@ -365,6 +365,7 @@ with col2:
     
     # Designed and Developed by section on the right side, lower position
     st.markdown("""
+    ---
     Designed and Developed by:  
     [Satyam Kumar](https://www.linkedin.com/in/satyamkumar09/) | [Priyansha Upadhyay](https://www.linkedin.com/in/priyansha1306/) | [Jaanavi V](https://www.linkedin.com/in/jaanavi-vemana-b21966256/)  
     """)
