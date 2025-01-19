@@ -349,25 +349,35 @@ with col4:
 # Guided by:  
 # [Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
 # """)
-col1, col2 = st.columns([1, 2])  # Creates two columns, with the second column being wider
+# Create two columns: One for data source (on the left) and the other for design/develop and guidance (on the right)
+col1, col2 = st.columns([1, 1])  # You can adjust the ratio of the columns if needed
 
 with col1:
+    # Data Source section on the left
     st.markdown("""
     ---
     Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)
     """)
 
-# Adding an empty row to push col2 lower down
-st.empty()
-
 with col2:
+    # Leave this first row in col2 empty for alignment
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Designed and Developed by section on the right side, lower position
     st.markdown("""
     Designed and Developed by:  
     [Satyam Kumar](https://www.linkedin.com/in/satyamkumar09/) | [Priyansha Upadhyay](https://www.linkedin.com/in/priyansha1306/) | [Jaanavi V](https://www.linkedin.com/in/jaanavi-vemana-b21966256/)  
+    """)
 
+    # Guided by section on the right side, lower position
+    st.markdown("""
     Guided by:  
     [Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
     """)
+
+# Optionally, you can add some custom space to push col2 down further if needed
+st.markdown("<br><br>", unsafe_allow_html=True)  # Adds more vertical space
+
 
 
 
