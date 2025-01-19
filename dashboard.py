@@ -38,6 +38,10 @@ st.markdown(
 
 # Add space after the description
 st.markdown("<br><br>", unsafe_allow_html=True)
+
+# Add a grey line after the description
+st.markdown('<hr style="border: 1px solid grey;"/>', unsafe_allow_html=True)
+
 # Load data
 @st.cache_data
 def load_data():
