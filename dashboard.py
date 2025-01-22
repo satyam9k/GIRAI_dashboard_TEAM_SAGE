@@ -184,7 +184,7 @@ with col1:
     # Render the title
     st.markdown(
         """
-        <div class="playfair-title">
+        <div>
             AI Governance: Measuring Global Preparedness
         </div>
         """,
