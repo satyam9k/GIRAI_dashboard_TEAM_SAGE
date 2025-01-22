@@ -10,41 +10,6 @@ import matplotlib.pyplot as plt
 st.set_page_config(layout="wide", page_title="Responsible AI Data Visualization Challenge Dashboard")
 #title
 
-# st.markdown(
-#     """
-#     <style>
-#     .centered-title {
-#         text-align: center;
-#         font-size: 36px; /* Adjust size for the title */
-#         color: white; /* Color of the text */
-#         font-weight: bold;
-#         margin-bottom: 10px;
-#         padding: 10px; /* Adds spacing inside the border */
-#         border: 2px solid grey; /* Thin grey border around the title */
-#         background: rgba(0, 123, 255, 0.2); /* Translucent blue background */
-#         border-radius: 10px; /* Rounded corners for the border */
-#         font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
-#     }
-#     .centered-text {
-#         text-align: center;
-#         font-size: 18px; /* Adjust size for the description */
-#         color: white; /* Color of the text */
-#     }
-#     </style>
-#     """,
-#     unsafe_allow_html=True
-# )
-
-# # Render the title with the updated style
-# st.markdown(
-#     """
-#     <div class="centered-title">
-#         Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)
-#     </div>
-#     """,
-#     unsafe_allow_html=True
-# )
-
 st.markdown(
     """
     <style>
@@ -70,7 +35,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Render the title with the updated style
 st.markdown(
     """
     <div class="centered-title">
@@ -89,13 +53,13 @@ st.markdown(
 
 st.markdown('<hr style="border: 1px solid grey;"/>', unsafe_allow_html=True)
 
-# Load data
+#data
 @st.cache_data
 def load_data():
     rankings_df = pd.read_excel('data/GIRAI_2024_Edition_Data.xlsx', sheet_name='Rankings and Scores')
     data_df = pd.read_excel('data/GIRAI_2024_Edition_Data.xlsx', sheet_name='Data')
     
-    # Data preprocessing
+    #preprocessing
     numeric_columns = ['Index score', 'ta_score', 'fr_weighted_score',
                       'ga_weighted_score', 'nsa_weighted_score']
     
@@ -108,7 +72,7 @@ def load_data():
     rankings_df.fillna(0, inplace=True)
     data_df.fillna(0, inplace=True)
     
-    # Add development status
+    # development status
     development_status = {
         'Developed': ['Netherlands', 'United States of America', 'Germany', 'United Kingdom', 'Japan',
                      'France', 'Canada', 'Australia', 'Sweden', 'Switzerland'],
@@ -126,45 +90,11 @@ def load_data():
 
 rankings_df, data_df = load_data()
 
-# Create layout with columns
+#layout with columns
 col1, col2 = st.columns([2, 1])
 
 # 1. Geographic Heat Map
-
-# with col1:
-#     st.markdown(
-#         """
-#         <h2 style="text-align: center; margin-bottom: 10px;">AI Governance: Measuring Global Preparedness</h2>
-#         """,
-#         unsafe_allow_html=True
-#     )
-    
-#     # Choropleth map
-#     fig_map = px.choropleth(
-#         rankings_df,
-#         locations='ISO3',
-#         color='Index score',
-#         hover_name='Country',
-#         color_continuous_scale='Viridis',
-#         projection="natural earth"
-#     )
-
-#     fig_map.update_layout(
-#         margin=dict(l=0, r=0, t=0, b=0),
-#         geo=dict(
-#             showframe=False, 
-#             showcoastlines=True,  
-#             coastlinecolor="Gray",  
-#             landcolor="white",  
-#             oceancolor="lightblue",  
-#             showocean=True,  
-#             projection_scale=1.1
-#         )
-#     )
-    
-#     st.plotly_chart(fig_map, use_container_width=True)
 with col1:
-    # Import Times New Roman font
     st.markdown(
         """
         <style>
@@ -184,8 +114,6 @@ with col1:
         """,
         unsafe_allow_html=True
     )
-
-    # Render the title
     st.markdown(
         """
         <div class="times-title">
@@ -195,10 +123,8 @@ with col1:
         unsafe_allow_html=True
     )
 
-    # Define countries to highlight
     highlight_countries = ['United States of America', 'India', 'Afghanistan']
 
-    # Mapping of full country names to abbreviations for legend
     country_abbreviations = {
         'United States of America': 'USA',
         'India': 'IND',
@@ -272,7 +198,6 @@ with col1:
 
 # 2. AI Governance by Development Status
 with col2:
-    # Import Times New Roman font for the title
     st.markdown(
         """
         <style>
@@ -288,7 +213,6 @@ with col2:
         unsafe_allow_html=True
     )
 
-    # Render the title
     st.markdown(
         """
         <div class="times-title">
@@ -343,7 +267,6 @@ col3, col4, col5 = st.columns([1, 1, .75])
 
 # 5. Average AI Governance Scores by Region
 with col5:
-    # Import Times New Roman font for the title
     st.markdown(
         """
         <style>
@@ -359,7 +282,6 @@ with col5:
         unsafe_allow_html=True
     )
 
-    # Render the title
     st.markdown(
         """
         <div class="times-title">
@@ -417,7 +339,6 @@ with col5:
 # 3. Thematic Focus by Development Status
 
 with col3:
-    # Import Times New Roman font for the title
     st.markdown(
         """
         <style>
@@ -433,7 +354,6 @@ with col3:
         unsafe_allow_html=True
     )
 
-    # Render the title
     st.markdown(
         """
         <div class="times-title">
@@ -513,81 +433,7 @@ with col3:
 
 # 4. Key Metrics Comparison
 
-# with col4:
-#     #st.subheader("Key Metrics Comparison for Focus Countries")
-#     st.markdown(
-#         """
-#         <h2 style="text-align: center; margin-bottom: 5px;">Key Metrics Comparison for Focus Countries</h2>
-#         """,
-#         unsafe_allow_html=True,
-#     )
-    
-#     selected_countries = ['United States of America', 'India', 'Afghanistan']
-
-#     categories = ['Index score', 'PILLAR SCORES', 'DIMENSION SCORES']
-#     category_aliases = ['Index Score', 'Pillar Score', 'Dimension Score']
-
-#     country_colors = {
-#         'United States of America': 'red',
-#         'India': 'blue',
-#         'Afghanistan': 'yellow'
-#     }
-
-#     fig_spider = go.Figure()
-    
-#     for country in selected_countries:
-
-#         values = rankings_df[rankings_df['Country'] == country][categories].values[0]
-
-#         fig_spider.add_trace(go.Scatterpolar(
-#             r=values,
-#             theta=category_aliases,
-#             name=country,
-#             fill='toself',
-#             line=dict(color=country_colors[country]),
-#             text=[f"{v:.1f}" for v in values],
-#             textposition='top center',
-#             textfont=dict(color='white', size=14),
-#             mode='lines+markers+text'
-#         ))
-#     fig_spider.update_layout(
-#         polar=dict(
-#             radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
-#             angularaxis=dict(
-#                 rotation=247,  
-#                 direction="clockwise", 
-                
-#             ),
-#             bgcolor='black'
-#         ),
-#         showlegend=True,
-#         legend=dict(
-#             yanchor="top",    # anchor point for y
-#             y=-0.1,          # position below the chart
-#             xanchor="left",   # anchor point for x
-#             x=0.8              # keep same horizontal position as original
-#         ),
-#         margin=dict(l=0, r=0, t=30, b=0)  # increased bottom margin to accommodate legend
-#     )      
-
-#     # fig_spider.update_layout(
-#     #     polar=dict(
-#     #         radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
-#     #         angularaxis=dict(
-#     #             rotation=247,  
-#     #             direction="clockwise", 
-#     #         ),
-#     #         bgcolor='black'
-#     #     ),
-#     #     showlegend=True,
-#     #     margin=dict(l=0, r=0, t=30, b=0)
-#     # )
-    
-#     # Render the chart
-#     st.plotly_chart(fig_spider, use_container_width=True)
-
 with col4:
-    # Import Times New Roman font for the title
     st.markdown(
         """
         <style>
@@ -603,7 +449,6 @@ with col4:
         unsafe_allow_html=True
     )
 
-    # Render the title
     st.markdown(
         """
         <div class="times-title">
