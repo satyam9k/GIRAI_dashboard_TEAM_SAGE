@@ -171,7 +171,7 @@ with col1:
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
         .playfair-title {
             text-align: center;
-            font-family: 'Playfair Display', serif; /* Apply Playfair Display font */
+            font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
             font-size: 30px; /* Adjust font size */
             color: white; /* Text color */
         }
