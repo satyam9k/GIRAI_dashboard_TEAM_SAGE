@@ -174,7 +174,7 @@ with col1:
         .playfair-title {
             text-align: center;
             font-family: 'Playfair Display', serif; /* Apply Playfair Display font */
-            font-size: 36px; /* Adjust font size */
+            font-size: 30px; /* Adjust font size */
             color: white; /* Text color */
         }
         </style>
