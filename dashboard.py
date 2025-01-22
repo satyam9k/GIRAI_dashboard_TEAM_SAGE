@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 #page config
 st.set_page_config(layout="wide", page_title="Responsible AI Data Visualization Challenge Dashboard")
 #title
+
 st.markdown(
     """
     <style>
@@ -22,6 +23,7 @@ st.markdown(
         border: 2px solid grey; /* Thin grey border around the title */
         background: rgba(0, 123, 255, 0.2); /* Translucent blue background */
         border-radius: 10px; /* Rounded corners for the border */
+        font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
     }
     .centered-text {
         text-align: center;
@@ -33,14 +35,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Render the title with the updated style
 st.markdown(
     """
-    <div style="text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 20px;">
+    <div class="centered-title">
         Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)
     </div>
     """,
     unsafe_allow_html=True
 )
+
 
 st.markdown(
     '<div class="centered-text">Discover the stark contrasts in how regions adopt and implement responsible AI principles. This visualization uncovers the global divide, spotlighting regions leading the way, those lagging behind, and the critical thematic areas demanding urgent attention to ensure an equitable AI future.</div>',
