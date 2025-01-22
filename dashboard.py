@@ -50,7 +50,7 @@ st.markdown(
     <style>
     .centered-title {
         text-align: center;
-        font-size: 36px; /* Adjust size for the title */
+        font-size: 34px; /* Adjust size for the title */
         color: white; /* Color of the text */
         font-weight: bold;
         margin-bottom: 10px;
@@ -74,7 +74,7 @@ st.markdown(
 st.markdown(
     """
     <div class="centered-title">
-        Uneven Progress: 🤖Responsible AI in the Global Landscape (Theme 3: Open Theme)🌎
+        🤖Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)🌎
     </div>
     """,
     unsafe_allow_html=True
