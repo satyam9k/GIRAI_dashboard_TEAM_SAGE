@@ -33,7 +33,15 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown('<div class="centered-title">Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)</div>', unsafe_allow_html=True)
+st.markdown(
+    """
+    <div style="text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 20px;">
+        Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown(
     '<div class="centered-text">Discover the stark contrasts in how regions adopt and implement responsible AI principles. This visualization uncovers the global divide, spotlighting regions leading the way, those lagging behind, and the critical thematic areas demanding urgent attention to ensure an equitable AI future.</div>',
     unsafe_allow_html=True
