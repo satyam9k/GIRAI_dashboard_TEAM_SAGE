@@ -272,83 +272,128 @@ with col1:
 
 # 2. AI Governance by Development Status
 with col2:
+    # Import Times New Roman font for the title
     st.markdown(
         """
-        <h2 style="text-align: center; margin-bottom: 10px;">AI Governance Across Development Stages</h2>
+        <style>
+        .times-title {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+            font-weight: bold; /* Bold text */
+            font-size: 32px; /* Adjust font size */
+            color: white; /* Text color */
+        }
+        </style>
         """,
         unsafe_allow_html=True
-        )
+    )
 
+    # Render the title
+    st.markdown(
+        """
+        <div class="times-title">
+            AI Governance Across Development Stages
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Filter data
     filtered_data = rankings_df[rankings_df['Development_Status'].isin(['Developed', 'Developing', 'Underdeveloped'])]
 
+    # Calculate average values
     avg_values = filtered_data.groupby('Development_Status')['Index score'].mean().reset_index()
 
-    #boxplot
+    # Boxplot
     fig_dev = px.box(
         filtered_data,
         x='Development_Status',
         y='Index score',
         color='Development_Status',
     )
-    
+
+    # Add average markers to the plot
     for status, avg in zip(avg_values['Development_Status'], avg_values['Index score']):
         fig_dev.add_trace(
             go.Scatter(
                 x=[status],
                 y=[avg],
                 mode='markers+text',
-                marker=dict(color='black', size=10), 
-                text=[f"Avg: {avg:.2f}"],  
+                marker=dict(color='black', size=10),
+                text=[f"Avg: {avg:.2f}"],
                 textposition='top right',
                 textfont=dict(color='cyan', size=14)
             )
         )
-    
+
+    # Update layout for the boxplot
     fig_dev.update_layout(
         showlegend=False,
         margin=dict(l=0, r=0, t=30, b=0),
         xaxis_title="Development Status",
         yaxis_title="Index Score",
     )
-    
+
     # Display the chart
     st.plotly_chart(fig_dev, use_container_width=True)
+
 
 # Create second row with columns
 col3, col4, col5 = st.columns([1, 1, .75])
 
 # 5. Average AI Governance Scores by Region
 with col5:
-    #st.subheader("Average AI Governance Scores by Region")
+    # Import Times New Roman font for the title
     st.markdown(
         """
-        <h2 style="text-align: center; margin-bottom: 10px;">Region-wise Average Index Score</h2>
+        <style>
+        .times-title {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+            font-weight: bold; /* Bold text */
+            font-size: 32px; /* Adjust font size */
+            color: white; /* Text color */
+        }
+        </style>
         """,
         unsafe_allow_html=True
     )
+
+    # Render the title
+    st.markdown(
+        """
+        <div class="times-title">
+            Region-wise Average Index Score
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Filter data
     filtered_rankings_df = rankings_df[rankings_df['GIRAI_region'] != 0]
     regional_avg = filtered_rankings_df.groupby('GIRAI_region')['Index score'].mean()
     regional_std = filtered_rankings_df.groupby('GIRAI_region')['Index score'].std()
-    
+
+    # Define colors for regions
     region_colors = {
         'Europe': 'mediumseagreen', 
-        'North America': 'mediumseagreen',  
-        'Asia and Oceania': 'deepskyblue',  
-        'Middle East': 'deepskyblue',  
-        'South and Central America': 'deepskyblue',  
-        'Africa': 'indianred',  
-        'Caribbean': 'indianred' 
+        'North America': 'mediumseagreen',
+        'Asia and Oceania': 'deepskyblue',
+        'Middle East': 'deepskyblue',
+        'South and Central America': 'deepskyblue',
+        'Africa': 'indianred',
+        'Caribbean': 'indianred'
     }
-    
-    
+
+    # Assign bar colors based on region
     bar_colors = [region_colors.get(region, 'grey') for region in regional_avg.index]
-    
+
+    # Create bar chart
     fig_regional = go.Figure()
     fig_regional.add_trace(
         go.Bar(
             x=regional_avg.index,
             y=regional_avg.values,
-            #error_y=dict(type='data', array=regional_std.values),
             name='Regional Score',
             marker=dict(color=bar_colors), 
             text=np.round(regional_avg.values, 2), 
@@ -356,28 +401,49 @@ with col5:
             textfont=dict(color='white')  
         )
     )
-    
+
+    # Update layout for bar chart
     fig_regional.update_layout(
         xaxis_title="Region",
         yaxis_title="Average Index Score",
         xaxis_tickangle=45,
         margin=dict(l=0, r=0, t=30, b=0)
     )
-    
+
+    # Display the chart
     st.plotly_chart(fig_regional, use_container_width=True)
 
 
 # 3. Thematic Focus by Development Status
 
 with col3:
-    #st.subheader("Thematic Area Scores by Development Status")
+    # Import Times New Roman font for the title
     st.markdown(
         """
-        <h2 style="text-align: center; margin-bottom: 10px;">Thematic Area Scores by Development Status</h2>
+        <style>
+        .times-title {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+            font-weight: bold; /* Bold text */
+            font-size: 32px; /* Adjust font size */
+            color: white; /* Text color */
+        }
+        </style>
         """,
-        unsafe_allow_html=True,
+        unsafe_allow_html=True
     )
-    
+
+    # Render the title
+    st.markdown(
+        """
+        <div class="times-title">
+            Thematic Area Scores by Development Status
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Define thematic areas
     thematic_areas_to_include = [
         "Access to Remedy and Redress",
         "Children's Rights",
@@ -390,9 +456,11 @@ with col3:
         "Responsibility and Accountability",
         "Transparency and Explainability"
     ]
-    
+
+    # Filter the data
     filtered_data = data_df[data_df['thematic_area'].isin(thematic_areas_to_include)]
-    
+
+    # Merge and process the data
     development_analysis = filtered_data.merge(
         rankings_df[['Country', 'Development_Status']],
         left_on='country',
@@ -406,6 +474,8 @@ with col3:
         categories=ordered_status,
         ordered=True
     )
+
+    # Pivot table for heatmap
     thematic_by_development = pd.pivot_table(
         development_analysis,
         values='ta_score',
@@ -414,6 +484,7 @@ with col3:
         aggfunc='mean'
     )
 
+    # Create the heatmap
     fig_heatmap = go.Figure(data=go.Heatmap(
         z=thematic_by_development.values,
         x=thematic_by_development.columns,
@@ -421,11 +492,12 @@ with col3:
         text=np.round(thematic_by_development.values, 2),
         texttemplate='%{text}',
         textfont={"size": 10},
-        colorscale='RdBu',  
+        colorscale='RdBu',
         showscale=True,
         hoverongaps=False
     ))
 
+    # Update heatmap layout
     fig_heatmap.update_layout(
         margin=dict(l=0, r=0, t=30, b=0),
         xaxis=dict(
@@ -435,9 +507,8 @@ with col3:
         height=400
     )
 
+    # Display the heatmap
     st.plotly_chart(fig_heatmap, use_container_width=True)
-
-
 
 
 # 4. Key Metrics Comparison
@@ -516,11 +587,30 @@ with col3:
 #     st.plotly_chart(fig_spider, use_container_width=True)
 
 with col4:
+    # Import Times New Roman font for the title
     st.markdown(
         """
-        <h2 style="text-align: center; margin-bottom: 5px;">Key Metrics Comparison for Focus Countries</h2>
+        <style>
+        .times-title {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+            font-weight: bold; /* Bold text */
+            font-size: 32px; /* Adjust font size */
+            color: white; /* Text color */
+        }
+        </style>
         """,
-        unsafe_allow_html=True,
+        unsafe_allow_html=True
+    )
+
+    # Render the title
+    st.markdown(
+        """
+        <div class="times-title">
+            Key Metrics Comparison for Focus Countries
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
     # Dropdown for selecting regional focus
@@ -596,6 +686,7 @@ with col4:
 
     # Render the chart
     st.plotly_chart(fig_spider, use_container_width=True)
+
 
 
 col1, col2 = st.columns([3, 1]) 
