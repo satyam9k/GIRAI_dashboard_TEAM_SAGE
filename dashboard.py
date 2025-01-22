@@ -172,6 +172,7 @@ with col1:
         .playfair-title {
             text-align: center;
             font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+            font-weight: bold;
             font-size: 30px; /* Adjust font size */
             color: white; /* Text color */
         }
