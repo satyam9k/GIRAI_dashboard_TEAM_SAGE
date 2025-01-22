@@ -77,7 +77,7 @@ st.markdown(
 st.markdown(
     """
     <div class="centered-title">
-        Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)🗺️🤖
+        🤖🗺️Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)🗺️🤖
     </div>
     """,
     unsafe_allow_html=True
