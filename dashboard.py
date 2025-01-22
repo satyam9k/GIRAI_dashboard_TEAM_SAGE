@@ -10,9 +10,46 @@ import matplotlib.pyplot as plt
 st.set_page_config(layout="wide", page_title="Responsible AI Data Visualization Challenge Dashboard")
 #title
 
+# st.markdown(
+#     """
+#     <style>
+#     .centered-title {
+#         text-align: center;
+#         font-size: 36px; /* Adjust size for the title */
+#         color: white; /* Color of the text */
+#         font-weight: bold;
+#         margin-bottom: 10px;
+#         padding: 10px; /* Adds spacing inside the border */
+#         border: 2px solid grey; /* Thin grey border around the title */
+#         background: rgba(0, 123, 255, 0.2); /* Translucent blue background */
+#         border-radius: 10px; /* Rounded corners for the border */
+#         font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+#     }
+#     .centered-text {
+#         text-align: center;
+#         font-size: 18px; /* Adjust size for the description */
+#         color: white; /* Color of the text */
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True
+# )
+
+# # Render the title with the updated style
+# st.markdown(
+#     """
+#     <div class="centered-title">
+#         Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)
+#     </div>
+#     """,
+#     unsafe_allow_html=True
+# )
+# Title
 st.markdown(
     """
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+    
     .centered-title {
         text-align: center;
         font-size: 36px; /* Adjust size for the title */
@@ -23,12 +60,13 @@ st.markdown(
         border: 2px solid grey; /* Thin grey border around the title */
         background: rgba(0, 123, 255, 0.2); /* Translucent blue background */
         border-radius: 10px; /* Rounded corners for the border */
-        font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+        font-family: 'Playfair Display', serif; /* Apply Playfair Display font */
     }
     .centered-text {
         text-align: center;
         font-size: 18px; /* Adjust size for the description */
         color: white; /* Color of the text */
+        font-family: 'Playfair Display', serif; /* Apply Playfair Display font */
     }
     </style>
     """,
