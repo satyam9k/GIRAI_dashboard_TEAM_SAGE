@@ -195,18 +195,6 @@ with col1:
         unsafe_allow_html=True
     )
 
-
-# Render the title with the updated style
-st.markdown(
-    """
-    <div class="centered-title">
-        Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
     # Define countries to highlight
     highlight_countries = ['United States of America', 'India', 'Afghanistan']
 
