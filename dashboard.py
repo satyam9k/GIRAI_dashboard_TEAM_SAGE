@@ -15,7 +15,7 @@ st.set_page_config(layout="wide", page_title="Responsible AI Data Visualization 
 #     <style>
 #     .centered-title {
 #         text-align: center;
-#         font-size: 36px; /* Adjust size for the title */
+#         font-size: 34px; /* Adjust size for the title */
 #         color: white; /* Color of the text */
 #         font-weight: bold;
 #         margin-bottom: 10px;
