@@ -166,12 +166,32 @@ col1, col2 = st.columns([2, 1])
     
 #     st.plotly_chart(fig_map, use_container_width=True)
 with col1:
+    # Import Playfair Display font
     st.markdown(
         """
-        <h2 style="text-align: center; margin-bottom: 10px;">AI Governance: Measuring Global Preparedness</h2>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+        .playfair-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif; /* Apply Playfair Display font */
+            font-size: 36px; /* Adjust font size */
+            color: white; /* Text color */
+        }
+        </style>
         """,
         unsafe_allow_html=True
     )
+
+    # Render the title
+    st.markdown(
+        """
+        <div class="playfair-title">
+            AI Governance: Measuring Global Preparedness
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 
     # Define countries to highlight
     highlight_countries = ['United States of America', 'India', 'Afghanistan']
