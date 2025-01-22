@@ -250,7 +250,7 @@ with col5:
     #st.subheader("Average AI Governance Scores by Region")
     st.markdown(
         """
-        <h2 style="text-align: center; margin-bottom: 10px;">Average AI Governance Scores by Region</h2>
+        <h2 style="text-align: center; margin-bottom: 10px;">Region-wise Average Index Score</h2>
         """,
         unsafe_allow_html=True
     )
@@ -287,7 +287,7 @@ with col5:
     
     fig_regional.update_layout(
         xaxis_title="Region",
-        yaxis_title="Average Score",
+        yaxis_title="Average Index Score",
         xaxis_tickangle=45,
         margin=dict(l=0, r=0, t=30, b=0)
     )
