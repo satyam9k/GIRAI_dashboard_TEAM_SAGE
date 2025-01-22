@@ -44,12 +44,25 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-
 st.markdown(
-    '<div class="centered-text">Discover the stark contrasts in how regions adopt and implement responsible AI principles. This visualization uncovers the global divide, spotlighting regions leading the way, those lagging behind, and the critical thematic areas demanding urgent attention to ensure an equitable AI future.</div>',
+    """
+    <style>
+    .times-text {
+        font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+        font-size: 18px; /* Adjust the size of the text */
+        color: white; /* Color of the text */
+        text-align: center;
+    }
+    </style>
+    """,
     unsafe_allow_html=True
 )
+
+st.markdown(
+    '<div class="times-text">Discover the stark contrasts in how regions adopt and implement responsible AI principles. This visualization uncovers the global divide, spotlighting regions leading the way, those lagging behind, and the critical thematic areas demanding urgent attention to ensure an equitable AI future.</div>',
+    unsafe_allow_html=True
+)
+
 
 st.markdown('<hr style="border: 1px solid grey;"/>', unsafe_allow_html=True)
 
