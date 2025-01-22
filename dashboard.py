@@ -164,17 +164,21 @@ col1, col2 = st.columns([2, 1])
     
 #     st.plotly_chart(fig_map, use_container_width=True)
 with col1:
-    # Import Playfair Display font
+    # Import Times New Roman font
     st.markdown(
         """
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
-        .playfair-title {
+        .times-title {
             text-align: center;
             font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
-            font-weight: bold;
+            font-weight: bold; /* Bold text */
             font-size: 32px; /* Adjust font size */
             color: white; /* Text color */
+        }
+        .centered-text {
+            text-align: center;
+            font-size: 18px; /* Adjust size for the description */
+            color: white; /* Color of the text */
         }
         </style>
         """,
@@ -184,12 +188,23 @@ with col1:
     # Render the title
     st.markdown(
         """
-        <div>
+        <div class="times-title">
             AI Governance: Measuring Global Preparedness
         </div>
         """,
         unsafe_allow_html=True
     )
+
+
+# Render the title with the updated style
+st.markdown(
+    """
+    <div class="centered-title">
+        Uneven Progress: Responsible AI in the Global Landscape (Theme 3: Open Theme)
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 
     # Define countries to highlight
