@@ -8,22 +8,25 @@ import matplotlib.pyplot as plt
 
 #page config
 st.set_page_config(layout="wide", page_title="Responsible AI Data Visualization Challenge Dashboard")
-
-#title and description
+#title
 st.markdown(
     """
     <style>
     .centered-title {
         text-align: center;
-        font-size: 36px; /* Optional: Adjust size for the title */
-        color: white; /* Optional: Adjust color for the title */
+        font-size: 36px; /* Adjust size for the title */
+        color: white; /* Color of the text */
         font-weight: bold;
         margin-bottom: 10px;
+        padding: 10px; /* Adds spacing inside the border */
+        border: 2px solid grey; /* Thin grey border around the title */
+        background: rgba(0, 123, 255, 0.2); /* Translucent blue background */
+        border-radius: 10px; /* Rounded corners for the border */
     }
     .centered-text {
         text-align: center;
-        font-size: 18px; /* Optional: Adjust size for the description */
-        color: white; /* Optional: Adjust color for the description */
+        font-size: 18px; /* Adjust size for the description */
+        color: white; /* Color of the text */
     }
     </style>
     """,
@@ -80,39 +83,129 @@ col1, col2 = st.columns([2, 1])
 
 # 1. Geographic Heat Map
 
-with col1:
-    st.subheader("Global AI Governance Maturity")
+# with col1:
+#     st.markdown(
+#         """
+#         <h2 style="text-align: center; margin-bottom: 10px;">AI Governance: Measuring Global Preparedness</h2>
+#         """,
+#         unsafe_allow_html=True
+#     )
     
-    #choropleth map
+#     # Choropleth map
+#     fig_map = px.choropleth(
+#         rankings_df,
+#         locations='ISO3',
+#         color='Index score',
+#         hover_name='Country',
+#         color_continuous_scale='Viridis',
+#         projection="natural earth"
+#     )
+
+#     fig_map.update_layout(
+#         margin=dict(l=0, r=0, t=0, b=0),
+#         geo=dict(
+#             showframe=False, 
+#             showcoastlines=True,  
+#             coastlinecolor="Gray",  
+#             landcolor="white",  
+#             oceancolor="lightblue",  
+#             showocean=True,  
+#             projection_scale=1.1
+#         )
+#     )
+    
+#     st.plotly_chart(fig_map, use_container_width=True)
+with col1:
+    st.markdown(
+        """
+        <h2 style="text-align: center; margin-bottom: 10px;">AI Governance: Measuring Global Preparedness</h2>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Define countries to highlight
+    highlight_countries = ['United States of America', 'India', 'Afghanistan']
+
+    # Mapping of full country names to abbreviations for legend
+    country_abbreviations = {
+        'United States of America': 'USA',
+        'India': 'IND',
+        'Afghanistan': 'AFG',
+        'Netherlands': 'NLD',
+        'Poland': 'POL',
+        'Albania': 'ALB',
+        'Singapore': 'SGP',
+        'China': 'CHN',
+        'Myanmar': 'MMR',
+        'Brazil': 'BRA',
+        'Haiti': 'HTI'
+    }
+
+    # Add a column to flag highlighted countries
+    rankings_df['Highlight'] = rankings_df['Country'].apply(
+        lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
+    )
+
+    # Choropleth map
     fig_map = px.choropleth(
         rankings_df,
         locations='ISO3',
         color='Index score',
         hover_name='Country',
         color_continuous_scale='Viridis',
-        projection="natural earth"  
+        projection="natural earth",
     )
-    
 
+    # Add markers for the highlighted countries with abbreviations
+    highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
+    for i, row in highlighted_data.iterrows():
+        fig_map.add_scattergeo(
+            locations=[row['ISO3']],
+            locationmode='ISO-3',
+            text=row['Country'],
+            marker=dict(
+                size=10,  # Marker size
+                color='red',  # Highlight color
+                symbol='circle'
+            ),
+            name=f"{country_abbreviations.get(row['Country'], row['Country'])} (Index: {row['Index score']:.1f})",  # Country abbreviation with index score
+        )
+
+    # Layout adjustments for the map
     fig_map.update_layout(
         margin=dict(l=0, r=0, t=0, b=0),
         geo=dict(
-            showframe=False, 
-            showcoastlines=True,  
-            coastlinecolor="Gray",  
-            landcolor="white",  
-            oceancolor="lightblue",  
-            showocean=True,  
-            projection_scale=1.1  
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="Gray",
+            landcolor="white",
+            oceancolor="lightblue",
+            showocean=True,
+            projection_scale=1.1,
+        ),
+        legend=dict(
+            title="Highlights",
+            x=0.8,  # Position the legend on the right
+            y=0.9,
+            bgcolor="rgba(255,255,255,0.8)",  # Semi-transparent background
+            font=dict(color="black"),  # Set legend text color to black
+            bordercolor="black",  # Border color for the legend
+            borderwidth=2  # Border width for better visibility
         )
     )
-    
+
+    # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
 
 
 # 2. AI Governance by Development Status
 with col2:
-    st.subheader("AI Governance by Development Status")
+    st.markdown(
+        """
+        <h2 style="text-align: center; margin-bottom: 10px;">AI Governance Across Development Stages</h2>
+        """,
+        unsafe_allow_html=True
+        )
 
     filtered_data = rankings_df[rankings_df['Development_Status'].isin(['Developed', 'Developing', 'Underdeveloped'])]
 
@@ -154,8 +247,13 @@ col3, col4, col5 = st.columns([1, 1, .75])
 
 # 5. Average AI Governance Scores by Region
 with col5:
-    st.subheader("Average AI Governance Scores by Region")
-    
+    #st.subheader("Average AI Governance Scores by Region")
+    st.markdown(
+        """
+        <h2 style="text-align: center; margin-bottom: 10px;">Average AI Governance Scores by Region</h2>
+        """,
+        unsafe_allow_html=True
+    )
     filtered_rankings_df = rankings_df[rankings_df['GIRAI_region'] != 0]
     regional_avg = filtered_rankings_df.groupby('GIRAI_region')['Index score'].mean()
     regional_std = filtered_rankings_df.groupby('GIRAI_region')['Index score'].std()
@@ -200,7 +298,13 @@ with col5:
 # 3. Thematic Focus by Development Status
 
 with col3:
-    st.subheader("Thematic Area Scores by Development Status")
+    #st.subheader("Thematic Area Scores by Development Status")
+    st.markdown(
+        """
+        <h2 style="text-align: center; margin-bottom: 10px;">Thematic Area Scores by Development Status</h2>
+        """,
+        unsafe_allow_html=True,
+    )
     
     thematic_areas_to_include = [
         "Access to Remedy and Redress",
@@ -266,72 +370,161 @@ with col3:
 
 # 4. Key Metrics Comparison
 
-with col4:
-    st.subheader("Key Metrics Comparison for Focus Countries")
+# with col4:
+#     #st.subheader("Key Metrics Comparison for Focus Countries")
+#     st.markdown(
+#         """
+#         <h2 style="text-align: center; margin-bottom: 5px;">Key Metrics Comparison for Focus Countries</h2>
+#         """,
+#         unsafe_allow_html=True,
+#     )
     
-    selected_countries = ['United States of America', 'India', 'Afghanistan']
+#     selected_countries = ['United States of America', 'India', 'Afghanistan']
 
+#     categories = ['Index score', 'PILLAR SCORES', 'DIMENSION SCORES']
+#     category_aliases = ['Index Score', 'Pillar Score', 'Dimension Score']
+
+#     country_colors = {
+#         'United States of America': 'red',
+#         'India': 'blue',
+#         'Afghanistan': 'yellow'
+#     }
+
+#     fig_spider = go.Figure()
+    
+#     for country in selected_countries:
+
+#         values = rankings_df[rankings_df['Country'] == country][categories].values[0]
+
+#         fig_spider.add_trace(go.Scatterpolar(
+#             r=values,
+#             theta=category_aliases,
+#             name=country,
+#             fill='toself',
+#             line=dict(color=country_colors[country]),
+#             text=[f"{v:.1f}" for v in values],
+#             textposition='top center',
+#             textfont=dict(color='white', size=14),
+#             mode='lines+markers+text'
+#         ))
+#     fig_spider.update_layout(
+#         polar=dict(
+#             radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
+#             angularaxis=dict(
+#                 rotation=247,  
+#                 direction="clockwise", 
+                
+#             ),
+#             bgcolor='black'
+#         ),
+#         showlegend=True,
+#         legend=dict(
+#             yanchor="top",    # anchor point for y
+#             y=-0.1,          # position below the chart
+#             xanchor="left",   # anchor point for x
+#             x=0.8              # keep same horizontal position as original
+#         ),
+#         margin=dict(l=0, r=0, t=30, b=0)  # increased bottom margin to accommodate legend
+#     )      
+
+#     # fig_spider.update_layout(
+#     #     polar=dict(
+#     #         radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
+#     #         angularaxis=dict(
+#     #             rotation=247,  
+#     #             direction="clockwise", 
+#     #         ),
+#     #         bgcolor='black'
+#     #     ),
+#     #     showlegend=True,
+#     #     margin=dict(l=0, r=0, t=30, b=0)
+#     # )
+    
+#     # Render the chart
+#     st.plotly_chart(fig_spider, use_container_width=True)
+
+with col4:
+    st.markdown(
+        """
+        <h2 style="text-align: center; margin-bottom: 5px;">Key Metrics Comparison for Focus Countries</h2>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # Dropdown for selecting regional focus
+    focus_options = {
+        "Default Focus (USA, India, Afghanistan)": ['United States of America', 'India', 'Afghanistan'],
+        "European Focus (Netherlands, Poland, Albania)": ['Netherlands', 'Poland', 'Albania'],
+        "Asian Focus (Singapore, China, Myanmar)": ['Singapore', 'China', 'Myanmar'],
+        "Americas Focus (USA, Brazil, Haiti)": ['United States of America', 'Brazil', 'Haiti']
+    }
+    
+    selected_focus = st.selectbox(
+        "Select Regional Focus",
+        options=list(focus_options.keys()),
+        index=0  # Default selection
+    )
+    
+    selected_countries = focus_options[selected_focus]
+
+    # Categories for the spider chart
     categories = ['Index score', 'PILLAR SCORES', 'DIMENSION SCORES']
     category_aliases = ['Index Score', 'Pillar Score', 'Dimension Score']
 
+    # Colors for countries (can expand if needed)
     country_colors = {
         'United States of America': 'red',
         'India': 'blue',
-        'Afghanistan': 'yellow'
+        'Afghanistan': 'yellow',
+        'Netherlands': 'orange',
+        'Poland': 'purple',
+        'Albania': 'pink',
+        'Singapore': 'cyan',
+        'China': 'green',
+        'Myanmar': 'magenta',
+        'Brazil': 'gold',
+        'Haiti': 'brown'
     }
 
+    # Create the spider chart
     fig_spider = go.Figure()
-    
+
     for country in selected_countries:
+        if country in rankings_df['Country'].values:
+            values = rankings_df[rankings_df['Country'] == country][categories].values[0]
 
-        values = rankings_df[rankings_df['Country'] == country][categories].values[0]
+            fig_spider.add_trace(go.Scatterpolar(
+                r=values,
+                theta=category_aliases,
+                name=country,
+                fill='toself',
+                line=dict(color=country_colors.get(country, 'grey')),
+                mode='lines+markers'
+            ))
 
-        fig_spider.add_trace(go.Scatterpolar(
-            r=values,
-            theta=category_aliases,
-            name=country,
-            fill='toself',
-            line=dict(color=country_colors[country]),
-            text=[f"{v:.1f}" for v in values],
-            textposition='top center',
-            textfont=dict(color='white', size=14),
-            mode='lines+markers+text'
-        ))
+    # Layout adjustments for spider chart
     fig_spider.update_layout(
         polar=dict(
             radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
             angularaxis=dict(
                 rotation=247,  
                 direction="clockwise", 
-                
             ),
             bgcolor='black'
         ),
         showlegend=True,
         legend=dict(
-            yanchor="top",    # anchor point for y
-            y=-0.1,          # position below the chart
-            xanchor="left",   # anchor point for x
-            x=0.8              # keep same horizontal position as original
+            yanchor="top",  
+            y=-0.1,          
+            xanchor="left",   
+            x=0.8             
         ),
-        margin=dict(l=0, r=0, t=30, b=0)  # increased bottom margin to accommodate legend
-    )      
+        margin=dict(l=0, r=0, t=30, b=50)  
+    )
 
-    # fig_spider.update_layout(
-    #     polar=dict(
-    #         radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
-    #         angularaxis=dict(
-    #             rotation=247,  
-    #             direction="clockwise", 
-    #         ),
-    #         bgcolor='black'
-    #     ),
-    #     showlegend=True,
-    #     margin=dict(l=0, r=0, t=30, b=0)
-    # )
-    
     # Render the chart
     st.plotly_chart(fig_spider, use_container_width=True)
+
 
 col1, col2 = st.columns([3, 1]) 
 
@@ -349,8 +542,9 @@ with col2:
     """)
     st.markdown("""
     Guided by:  
-    [Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
+    [Dr.Gobi Ramasamy](https://www.linkedin.com/in/gobiramasamy/)
     """)
+
 
 
 
