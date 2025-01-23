@@ -136,22 +136,20 @@ with col1:
         unsafe_allow_html=True
     )
 
-    # Add toggle button for resetting view
     if "highlight_view" not in st.session_state:
-        st.session_state.highlight_view = False  # Default is normal view
+        st.session_state.highlight_view = False  
 
     toggle_view = st.button("Change View📌")
     if toggle_view:
         st.session_state.highlight_view = not st.session_state.highlight_view
 
-    # Determine the map type based on the toggle state
     if st.session_state.highlight_view:
-        # Highlight view: Highlight specific countries
+
         highlight_countries = ['United States of America', 'India', 'Afghanistan']
         rankings_df['Color'] = rankings_df['Country'].apply(
             lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
         )
-        # Define color map for highlight view
+
         color_discrete_map = {
             'Highlighted': 'gold',
             'Normal': 'lightgrey'
@@ -172,17 +170,15 @@ with col1:
             projection_scale=2.5
         )
 
-        # Extract Index scores for highlighted countries
         india_value = rankings_df.loc[rankings_df['Country'] == 'India', 'Index score'].values[0]
         usa_value = rankings_df.loc[rankings_df['Country'] == 'United States of America', 'Index score'].values[0]
         afghanistan_value = rankings_df.loc[rankings_df['Country'] == 'Afghanistan', 'Index score'].values[0]
 
-        # Add annotations for highlighted countries
         fig_map.update_layout(
             annotations=[
                 dict(
-                    x=0.5,  # Center the legend horizontally
-                    y=0.1,  # Place it near the bottom
+                    x=0.5, 
+                    y=0.1,
                     xanchor='center',
                     yanchor='middle',
                     text=(
@@ -193,7 +189,7 @@ with col1:
                     ),
                     showarrow=False,
                     font=dict(size=14, color="black"),
-                    bgcolor="rgba(255, 255, 255, 0.7)",  # Semi-transparent white background
+                    bgcolor="rgba(255, 255, 255, 0.7)", 
                     bordercolor="black",
                     borderwidth=1
                 )
@@ -201,7 +197,7 @@ with col1:
         )
 
     else:
-        # Normal view: Choropleth based on index values
+
         fig_map = px.choropleth(
             rankings_df,
             locations='ISO3',
@@ -216,7 +212,6 @@ with col1:
             projection_scale=1.5
         )
 
-    # Layout adjustments
     fig_map.update_layout(
         margin=dict(l=0, r=0, t=0, b=0),
         geo=dict(
@@ -230,136 +225,7 @@ with col1:
         showlegend=False,
     )
 
-    # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
-
-# with col1:
-#     st.markdown(
-#         """
-#         <style>
-#         .times-title {
-#             text-align: center;
-#             font-family: 'Times New Roman', Times, serif;
-#             font-weight: bold;
-#             font-size: 32px;
-#             color: white;
-#         }
-#         .centered-text {
-#             text-align: center;
-#             font-size: 18px;
-#             color: white;
-#         }
-#         </style>
-#         """,
-#         unsafe_allow_html=True
-#     )
-#     st.markdown(
-#         """
-#         <div class="times-title">
-#             AI Governance: Measuring Global Preparedness
-#         </div>
-#         """,
-#         unsafe_allow_html=True
-#     )
-
-#     # Add toggle button for resetting view
-#     if "highlight_view" not in st.session_state:
-#         st.session_state.highlight_view = True
-
-#     toggle_view = st.button("Reset View")
-#     if toggle_view:
-#         st.session_state.highlight_view = not st.session_state.highlight_view
-
-#     # Determine the map type based on the toggle state
-#     if st.session_state.highlight_view:
-#         # Highlight view: Highlight specific countries
-#         highlight_countries = ['United States of America', 'India', 'Afghanistan']
-#         rankings_df['Color'] = rankings_df['Country'].apply(
-#             lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
-#         )
-#         # Define color map for highlight view
-#         color_discrete_map = {
-#             'Highlighted': 'gold',
-#             'Normal': 'lightgrey'
-#         }
-
-#         fig_map = px.choropleth(
-#             rankings_df,
-#             locations='ISO3',
-#             color='Color',
-#             hover_name='Country',
-#             hover_data={'Index score': True, 'Color': False},
-#             color_discrete_map=color_discrete_map,
-#             projection="natural earth"
-#         )
-
-#         # Zoom into the Indian subcontinent
-#         fig_map.update_geos(
-#             center=dict(lat=20, lon=80),
-#             projection_scale=2.5
-#         )
-
-#         # Extract Index scores for highlighted countries
-#         india_value = rankings_df.loc[rankings_df['Country'] == 'India', 'Index score'].values[0]
-#         usa_value = rankings_df.loc[rankings_df['Country'] == 'United States of America', 'Index score'].values[0]
-#         afghanistan_value = rankings_df.loc[rankings_df['Country'] == 'Afghanistan', 'Index score'].values[0]
-
-#         # Add annotations for highlighted countries
-#         fig_map.update_layout(
-#             annotations=[
-#                 dict(
-#                     x=0.5,  # Center the legend horizontally
-#                     y=0.1,  # Place it near the bottom
-#                     xanchor='center',
-#                     yanchor='middle',
-#                     text=(
-#                         f"<b>Highlighted Countries:</b><br>"
-#                         f"<b>India's Index Score:</b> {india_value:.2f}<br>"
-#                         f"<b>USA's Index Score:</b> {usa_value:.2f}<br>"
-#                         f"<b>Afghanistan's Index Score:</b> {afghanistan_value:.2f}"
-#                     ),
-#                     showarrow=False,
-#                     font=dict(size=14, color="black"),
-#                     bgcolor="rgba(255, 255, 255, 0.7)",  # Semi-transparent white background
-#                     bordercolor="black",
-#                     borderwidth=1
-#                 )
-#             ]
-#         )
-
-#     else:
-#         # Normal view: Choropleth based on index values
-#         fig_map = px.choropleth(
-#             rankings_df,
-#             locations='ISO3',
-#             color='Index score',
-#             hover_name='Country',
-#             color_continuous_scale='Viridis',
-#             projection="natural earth"
-#         )
-
-#         # Display the entire map
-#         fig_map.update_geos(
-#             center=dict(lat=0, lon=0),
-#             projection_scale=1.1
-#         )
-
-#     # Layout adjustments
-#     fig_map.update_layout(
-#         margin=dict(l=0, r=0, t=0, b=0),
-#         geo=dict(
-#             showframe=False,
-#             showcoastlines=True,
-#             coastlinecolor="Gray",
-#             landcolor="white",
-#             oceancolor="lightblue",
-#             showocean=True,
-#         ),
-#         showlegend=False,
-#     )
-
-#     # Render the map
-#     st.plotly_chart(fig_map, use_container_width=True)
 
 # 2. AI Governance by Development Status
 with col2:
@@ -415,7 +281,6 @@ with col2:
             )
         )
 
-    # Update layout for the boxplot
     fig_dev.update_layout(
         showlegend=False,
         margin=dict(l=0, r=0, t=30, b=0),
@@ -587,109 +452,16 @@ with col3:
 
     # Update heatmap layout
     fig_heatmap.update_layout(
-        margin=dict(l=10, r=10, t=30, b=30),  # Standard margin
+        margin=dict(l=10, r=10, t=30, b=30), 
         xaxis=dict(
             title='Thematic Areas',
             tickangle=45
         ),
-        height=500,  # Standard height to ensure it doesn't shrink
+        height=500,  
     )
 
     # Display the heatmap
     st.plotly_chart(fig_heatmap, use_container_width=True)
-
-
-# with col3:
-#     st.markdown(
-#         """
-#         <style>
-#         .times-title {
-#             text-align: center;
-#             font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
-#             font-weight: bold; /* Bold text */
-#             font-size: 32px; /* Adjust font size */
-#             color: white; /* Text color */
-#         }
-#         </style>
-#         """,
-#         unsafe_allow_html=True
-#     )
-
-#     st.markdown(
-#         """
-#         <div class="times-title">
-#             Thematic Area Scores by Development Status
-#         </div>
-#         """,
-#         unsafe_allow_html=True
-#     )
-
-#     # Define thematic areas
-#     thematic_areas_to_include = [
-#         "Access to Remedy and Redress",
-#         "Children's Rights",
-#         "Data Protection and Privacy",
-#         "Gender Equality",
-#         "International Cooperation",
-#         "Labour Protection and Right to Work",
-#         "National AI Policy",
-#         "Public Participation and Awareness",
-#         "Responsibility and Accountability",
-#         "Transparency and Explainability"
-#     ]
-
-#     # Filter the data
-#     filtered_data = data_df[data_df['thematic_area'].isin(thematic_areas_to_include)]
-
-#     # Merge and process the data
-#     development_analysis = filtered_data.merge(
-#         rankings_df[['Country', 'Development_Status']],
-#         left_on='country',
-#         right_on='Country'
-#     )
-
-#     development_analysis = development_analysis[development_analysis['Development_Status'] != "Other"]
-#     ordered_status = ['Developed', 'Developing', 'Underdeveloped']
-#     development_analysis['Development_Status'] = pd.Categorical(
-#         development_analysis['Development_Status'],
-#         categories=ordered_status,
-#         ordered=True
-#     )
-
-#     # Pivot table for heatmap
-#     thematic_by_development = pd.pivot_table(
-#         development_analysis,
-#         values='ta_score',
-#         index='Development_Status',
-#         columns='thematic_area',
-#         aggfunc='mean'
-#     )
-
-#     # Create the heatmap
-#     fig_heatmap = go.Figure(data=go.Heatmap(
-#         z=thematic_by_development.values,
-#         x=thematic_by_development.columns,
-#         y=thematic_by_development.index,
-#         text=np.round(thematic_by_development.values, 2),
-#         texttemplate='%{text}',
-#         textfont={"size": 10},
-#         colorscale='RdBu',
-#         showscale=True,
-#         hoverongaps=False
-#     ))
-
-#     # Update heatmap layout
-#     fig_heatmap.update_layout(
-#         margin=dict(l=0, r=0, t=30, b=0),
-#         xaxis=dict(
-#             title='Thematic Areas',
-#             tickangle=45
-#         ),    
-#         height=400
-#     )
-
-#     # Display the heatmap
-#     st.plotly_chart(fig_heatmap, use_container_width=True)
 
 
 # 4. Key Metrics Comparison
@@ -800,8 +572,10 @@ col1, col2 = st.columns([3, 1])
 with col1:
     st.markdown("""
     ---
-    Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)
+    Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)  
+    Analysis Report: [Team Sage Analysis Report](https://drive.google.com/file/d/1RtZEO8GX3MYZfaq-6BMbRREtBR7x3WmD/view?usp=sharing)
     """)
+
 
 with col2:
     st.markdown("""
