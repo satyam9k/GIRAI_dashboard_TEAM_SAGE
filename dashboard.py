@@ -212,7 +212,7 @@ with col1:
         )
 
         fig_map.update_geos(
-            center=dict(lat=15, lon=30),
+            center=dict(lat=10, lon=20),
             projection_scale=1.5
         )
 
