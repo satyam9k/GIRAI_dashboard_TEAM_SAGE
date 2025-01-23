@@ -327,8 +327,21 @@ with col1:
         unsafe_allow_html=True
     )
 
-    # Highlighted countries
-    highlight_countries = ['United States of America', 'India', 'Afghanistan']
+    # Add toggle button for resetting view
+    if "highlight_view" not in st.session_state:
+        st.session_state.highlight_view = True
+
+    toggle_view = st.button("Reset View")
+    if toggle_view:
+        st.session_state.highlight_view = not st.session_state.highlight_view
+
+    # Determine the highlighted countries based on the toggle state
+    if st.session_state.highlight_view:
+        highlight_countries = ['United States of America', 'India', 'Afghanistan']
+    else:
+        highlight_countries = []  # No highlighted countries in normal view
+
+    # Apply highlighting logic
     rankings_df['Highlight'] = rankings_df['Country'].apply(
         lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
     )
@@ -350,35 +363,49 @@ with col1:
         projection="natural earth"
     )
 
-    # Default view: Zoom into the Indian subcontinent
-    fig_map.update_geos(
-        center=dict(lat=20, lon=80),
-        projection_scale=2.5
-    )
-
-    # Add toggle button for resetting view
-    if "reset_view" not in st.session_state:
-        st.session_state.reset_view = False
-
-    toggle_view = st.button("Reset View")
-    if toggle_view:
-        st.session_state.reset_view = not st.session_state.reset_view
-
-    if st.session_state.reset_view:
-        fig_map.update_geos(
-            center=dict(lat=0, lon=0),
-            projection_scale=1.1
-        )
-    else:
+    # Set the view: Default zoom into the Indian subcontinent or normal view
+    if st.session_state.highlight_view:
         fig_map.update_geos(
             center=dict(lat=20, lon=80),
             projection_scale=2.5
         )
+    else:
+        fig_map.update_geos(
+            center=dict(lat=0, lon=0),
+            projection_scale=1.1
+        )
 
-    # Extract Index scores for highlighted countries
-    india_value = rankings_df.loc[rankings_df['Country'] == 'India', 'Index score'].values[0]
-    usa_value = rankings_df.loc[rankings_df['Country'] == 'United States of America', 'Index score'].values[0]
-    afghanistan_value = rankings_df.loc[rankings_df['Country'] == 'Afghanistan', 'Index score'].values[0]
+    # Extract Index scores for highlighted countries (only if in highlight view)
+    if st.session_state.highlight_view:
+        india_value = rankings_df.loc[rankings_df['Country'] == 'India', 'Index score'].values[0]
+        usa_value = rankings_df.loc[rankings_df['Country'] == 'United States of America', 'Index score'].values[0]
+        afghanistan_value = rankings_df.loc[rankings_df['Country'] == 'Afghanistan', 'Index score'].values[0]
+
+        # Add annotations for highlighted countries
+        fig_map.update_layout(
+            annotations=[
+                dict(
+                    x=0.5,  # Center the legend horizontally
+                    y=0.1,  # Place it near the bottom
+                    xanchor='center',
+                    yanchor='middle',
+                    text=(
+                        f"<b>Highlighted Countries:</b><br>"
+                        f"<b>India's Index Score:</b> {india_value:.2f}<br>"
+                        f"<b>USA's Index Score:</b> {usa_value:.2f}<br>"
+                        f"<b>Afghanistan's Index Score:</b> {afghanistan_value:.2f}"
+                    ),
+                    showarrow=False,
+                    font=dict(size=14, color="black"),
+                    bgcolor="rgba(255, 255, 255, 0.7)",  # Semi-transparent white background
+                    bordercolor="black",
+                    borderwidth=1
+                )
+            ]
+        )
+    else:
+        # Clear annotations in normal view
+        fig_map.update_layout(annotations=[])
 
     # Layout adjustments
     fig_map.update_layout(
@@ -392,25 +419,6 @@ with col1:
             showocean=True,
         ),
         showlegend=False,
-        annotations=[
-            dict(
-                x=0.5,  # Center the legend horizontally
-                y=0.1,  # Place it near the bottom
-                xanchor='center',
-                yanchor='middle',
-                text=(
-                    f"<b>Highlighted Countries:</b><br>"
-                    f"<b>India's Index Score:</b> {india_value:.2f}<br>"
-                    f"<b>USA's Index Score:</b> {usa_value:.2f}<br>"
-                    f"<b>Afghanistan's Index Score:</b> {afghanistan_value:.2f}"
-                ),
-                showarrow=False,
-                font=dict(size=14, color="black"),
-                bgcolor="rgba(255, 255, 255, 0.7)",  # Semi-transparent white background
-                bordercolor="black",
-                borderwidth=1
-            )
-        ]
     )
 
     # Render the map
