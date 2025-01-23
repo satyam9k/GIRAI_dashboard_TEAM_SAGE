@@ -573,7 +573,7 @@ with col1:
     st.markdown("""
     ---
     Data source: [GIRAI 2024 Edition](https://docs.google.com/spreadsheets/d/1548vd6pfzybRL7xXHgdb6VL_NdCXG11sm5WkLzN3dTg/edit?pli=1&gid=1569144951#gid=1569144951)  
-    Analysis Report: [Team Sage Analysis Report](https://drive.google.com/file/d/1RtZEO8GX3MYZfaq-6BMbRREtBR7x3WmD/view?usp=sharing)
+    Analysis Report: [Team Sage Analysis Report](https://drive.google.com/file/d/1k-fm_R4GKyYx70wDXDFLtRzEOYk_AOAC/view?usp=sharing)
     """)
 
 
