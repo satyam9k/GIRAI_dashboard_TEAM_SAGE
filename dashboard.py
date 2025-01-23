@@ -304,15 +304,15 @@ with col1:
         <style>
         .times-title {
             text-align: center;
-            font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
-            font-weight: bold; /* Bold text */
-            font-size: 32px; /* Adjust font size */
-            color: white; /* Text color */
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            font-size: 32px;
+            color: white;
         }
         .centered-text {
             text-align: center;
-            font-size: 18px; /* Adjust size for the description */
-            color: white; /* Color of the text */
+            font-size: 18px;
+            color: white;
         }
         </style>
         """,
@@ -335,8 +335,8 @@ with col1:
 
     # Define color map for highlighted countries
     color_discrete_map = {
-        'Highlighted': 'gold',  # Highlighted countries
-        'Normal': 'lightgrey'   # Non-highlighted countries
+        'Highlighted': 'gold',
+        'Normal': 'lightgrey'
     }
 
     # Create the choropleth map
@@ -352,8 +352,8 @@ with col1:
 
     # Default view: Zoom into the Indian subcontinent
     fig_map.update_geos(
-        center=dict(lat=20, lon=80),  # Centered at Indian subcontinent
-        projection_scale=2.5  # Zoom level
+        center=dict(lat=20, lon=80),
+        projection_scale=2.5
     )
 
     # Add toggle button for resetting view
@@ -365,16 +365,14 @@ with col1:
         st.session_state.reset_view = not st.session_state.reset_view
 
     if st.session_state.reset_view:
-        # Global view
         fig_map.update_geos(
-            center=dict(lat=0, lon=0),  # Global center
-            projection_scale=1.1  # Default zoom level
+            center=dict(lat=0, lon=0),
+            projection_scale=1.1
         )
     else:
-        # Indian subcontinent view
         fig_map.update_geos(
-            center=dict(lat=20, lon=80),  # Indian subcontinent center
-            projection_scale=2.5  # Zoom level
+            center=dict(lat=20, lon=80),
+            projection_scale=2.5
         )
 
     # Extract Index scores for highlighted countries
@@ -386,48 +384,38 @@ with col1:
     annotations = [
         dict(
             x=0.5,
-            y=-0.2,  # Position for India
+            y=-0.1,
             text=f"<b>India's Index Score: {india_value:.2f}</b>",
             showarrow=False,
-            font=dict(size=14, color="black"),
+            font=dict(size=12, color="black"),
             align="center",
             xref="paper",
-            yref="paper",
-            bgcolor="white",
-            bordercolor="black",
-            borderwidth=1
+            yref="paper"
         ),
         dict(
             x=0.5,
-            y=-0.25,  # Position for USA
+            y=-0.15,
             text=f"<b>USA's Index Score: {usa_value:.2f}</b>",
             showarrow=False,
-            font=dict(size=14, color="black"),
+            font=dict(size=12, color="black"),
             align="center",
             xref="paper",
-            yref="paper",
-            bgcolor="white",
-            bordercolor="black",
-            borderwidth=1
+            yref="paper"
         ),
         dict(
             x=0.5,
-            y=-0.3,  # Position for Afghanistan
+            y=-0.2,
             text=f"<b>Afghanistan's Index Score: {afghanistan_value:.2f}</b>",
             showarrow=False,
-            font=dict(size=14, color="black"),
+            font=dict(size=12, color="black"),
             align="center",
             xref="paper",
-            yref="paper",
-            bgcolor="white",
-            bordercolor="black",
-            borderwidth=1
+            yref="paper"
         )
     ]
 
-    # Apply annotations to the layout
     fig_map.update_layout(
-        margin=dict(l=0, r=0, t=0, b=0),
+        margin=dict(l=0, r=0, t=0, b=50),
         geo=dict(
             showframe=False,
             showcoastlines=True,
@@ -437,11 +425,12 @@ with col1:
             showocean=True,
         ),
         annotations=annotations,
-        showlegend=False  # Disable the legend
+        showlegend=False
     )
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
+
 
 
 
