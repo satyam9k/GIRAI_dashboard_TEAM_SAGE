@@ -385,7 +385,7 @@ with col1:
             dict(
                 x=0.5,  # Centered horizontally
                 y=-0.15 - (i * 0.05),  # Vertical offset for each country
-                text=f"<b>{row.Country}:</b> {row.Index_score:.2f}",
+                text=f"<b>{row.Country}:</b> {row.Index score:.2f}",
                 showarrow=False,
                 font=dict(size=14, color="black"),  # Black text for better visibility
                 align="center",
