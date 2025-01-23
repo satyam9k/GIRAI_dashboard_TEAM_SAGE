@@ -169,7 +169,7 @@ with col1:
 
         fig_map.update_geos(
             center=dict(lat=20, lon=80),
-            projection_scale=1.8
+            projection_scale=2.5
         )
 
         # Extract Index scores for highlighted countries
@@ -211,10 +211,9 @@ with col1:
             projection="natural earth"
         )
 
-        # Slightly zoomed view of the entire map (Indian subcontinent as default)
         fig_map.update_geos(
             center=dict(lat=20, lon=80),
-            projection_scale=2.5
+            projection_scale=1.5
         )
 
     # Layout adjustments
