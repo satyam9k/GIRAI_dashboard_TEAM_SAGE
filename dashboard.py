@@ -402,6 +402,9 @@ with col3:
         unsafe_allow_html=True
     )
 
+    # Add vertical spacing above the heatmap
+    st.markdown("<div style='height: 30px;'></div>", unsafe_allow_html=True)
+
     # Define thematic areas
     thematic_areas_to_include = [
         "Access to Remedy and Redress",
@@ -458,21 +461,19 @@ with col3:
 
     # Update heatmap layout
     fig_heatmap.update_layout(
-        margin=dict(l=10, r=10, t=30, b=30),  # Increase bottom margin
+        margin=dict(l=10, r=10, t=30, b=30),  # Standard margin
         xaxis=dict(
             title='Thematic Areas',
             tickangle=45
-        ),    
-        height=420,  # Slightly increase the height to add more spacing
-        plot_bgcolor='rgba(0,0,0,0)',  # Optional: Transparent background
-        paper_bgcolor='rgba(0,0,0,0)',  # Optional: Transparent background
+        ),
+        height=400,  # Standard height to ensure it doesn't shrink
     )
-
-    # Add padding below the heatmap container
-    st.markdown("<div style='padding-top: 20px;'></div>", unsafe_allow_html=True)
 
     # Display the heatmap
     st.plotly_chart(fig_heatmap, use_container_width=True)
+
+    # Add vertical spacing below the heatmap
+    st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
 
 # with col3:
 #     st.markdown(
