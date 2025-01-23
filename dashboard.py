@@ -130,7 +130,7 @@ with col1:
     st.markdown(
         """
         <div class="times-title">
-            AI Governance: Measuring Global Preparedness
+            AI Landscape: Measuring Global Preparedness
         </div>
         """,
         unsafe_allow_html=True
@@ -169,7 +169,7 @@ with col1:
 
         fig_map.update_geos(
             center=dict(lat=20, lon=80),
-            projection_scale=2.2
+            projection_scale=1.8
         )
 
         # Extract Index scores for highlighted countries
