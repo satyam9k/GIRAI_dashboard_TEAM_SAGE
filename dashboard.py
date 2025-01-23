@@ -380,12 +380,12 @@ with col1:
     # Add annotations for highlighted countries
     highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
     annotations = []
-    for i, row in highlighted_data.iterrows():
+    for i, row in enumerate(highlighted_data.itertuples(), start=1):
         annotations.append(
             dict(
                 x=0.5,  # Centered horizontally
                 y=-0.15 - (i * 0.05),  # Vertical offset for each country
-                text=f"<b>{row['Country']}:</b> {row['Index score']:.2f}",
+                text=f"<b>{row.Country}:</b> {row.Index_score:.2f}",
                 showarrow=False,
                 font=dict(size=14, color="black"),  # Black text for better visibility
                 align="center",
@@ -408,11 +408,13 @@ with col1:
             oceancolor="lightblue",
             showocean=True,
         ),
-        annotations=annotations
+        annotations=annotations,
+        showlegend=False  # Disable the legend
     )
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
+
 
 
 # 2. AI Governance by Development Status
