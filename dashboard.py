@@ -402,7 +402,7 @@ with col3:
         unsafe_allow_html=True
     )
 
-    # Add vertical spacing above the heatmap
+    # Add vertical spacing above the heatmap to move it down
     st.markdown("<div style='height: 30px;'></div>", unsafe_allow_html=True)
 
     # Define thematic areas
@@ -472,8 +472,6 @@ with col3:
     # Display the heatmap
     st.plotly_chart(fig_heatmap, use_container_width=True)
 
-    # Add vertical spacing below the heatmap
-    st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
 
 # with col3:
 #     st.markdown(
