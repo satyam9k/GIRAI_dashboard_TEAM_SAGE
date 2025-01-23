@@ -333,10 +333,10 @@ with col1:
         lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
     )
 
-    # Define color map
+    # Define color map for highlighted countries and grey for others
     color_discrete_map = {'Highlighted': 'gold', 'Normal': 'lightgrey'}
 
-    # Create choropleth map
+    # Create the choropleth map
     fig_map = px.choropleth(
         rankings_df,
         locations='ISO3',
@@ -347,36 +347,39 @@ with col1:
         projection="natural earth"
     )
 
-    # Default zoom into Indian subcontinent
+    # Customize hover label to display values in black
+    fig_map.update_traces(
+        hoverlabel=dict(
+            font=dict(color="black")  # Set hover text color to black
+        )
+    )
+
+    # Default view: Zoom into the Indian subcontinent
     fig_map.update_geos(
-        center=dict(lat=20, lon=80),  # Coordinates for Indian subcontinent
+        center=dict(lat=20, lon=80),  # Centered at Indian subcontinent
         projection_scale=2.5  # Zoom level
     )
 
-    # Highlight markers for USA, India, and Afghanistan
-    highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
-    for _, row in highlighted_data.iterrows():
-        fig_map.add_scattergeo(
-            locations=[row['ISO3']],
-            locationmode='ISO-3',
-            text=f"{row['Country']} (Index: {row['Index score']:.2f})",
-            marker=dict(size=12, color='red', symbol='circle'),
-            name=row['Country']
-        )
+    # Add toggle button for resetting view
+    if "reset_view" not in st.session_state:
+        st.session_state.reset_view = False
 
-    # Add Reset View button
     toggle_view = st.button("Reset View")
     if toggle_view:
-        if fig_map.layout.geo.center.lon == 80:  # If in default view, reset to global view
-            fig_map.update_geos(
-                center=dict(lat=0, lon=0),  # Center the map globally
-                projection_scale=1.1  # Default zoom level
-            )
-        else:  # If in global view, reset to default Indian subcontinent view
-            fig_map.update_geos(
-                center=dict(lat=20, lon=80),  # Coordinates for Indian subcontinent
-                projection_scale=2.5  # Zoom level
-            )
+        st.session_state.reset_view = not st.session_state.reset_view
+
+    if st.session_state.reset_view:
+        # Global view
+        fig_map.update_geos(
+            center=dict(lat=0, lon=0),  # Global center
+            projection_scale=1.1  # Default zoom level
+        )
+    else:
+        # Indian subcontinent view
+        fig_map.update_geos(
+            center=dict(lat=20, lon=80),  # Indian subcontinent center
+            projection_scale=2.5  # Zoom level
+        )
 
     # Layout adjustments
     fig_map.update_layout(
