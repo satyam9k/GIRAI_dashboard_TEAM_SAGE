@@ -466,7 +466,7 @@ with col3:
             title='Thematic Areas',
             tickangle=45
         ),
-        height=600,  # Standard height to ensure it doesn't shrink
+        height=500,  # Standard height to ensure it doesn't shrink
     )
 
     # Display the heatmap
