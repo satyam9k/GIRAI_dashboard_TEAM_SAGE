@@ -107,7 +107,6 @@ rankings_df, data_df = load_data()
 col1, col2 = st.columns([2, 1])
 
 # 1. Geographic Heat Map
-
 with col1:
     st.markdown(
         """
@@ -139,7 +138,7 @@ with col1:
 
     # Add toggle button for resetting view
     if "highlight_view" not in st.session_state:
-        st.session_state.highlight_view = True
+        st.session_state.highlight_view = False  # Default is normal view
 
     toggle_view = st.button("Reset View")
     if toggle_view:
@@ -213,10 +212,10 @@ with col1:
             projection="natural earth"
         )
 
-        # Display the entire map
+        # Slightly zoomed view of the entire map (Indian subcontinent as default)
         fig_map.update_geos(
-            center=dict(lat=0, lon=0),
-            projection_scale=1.1
+            center=dict(lat=20, lon=80),
+            projection_scale=2.5
         )
 
     # Layout adjustments
@@ -235,6 +234,134 @@ with col1:
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
+
+# with col1:
+#     st.markdown(
+#         """
+#         <style>
+#         .times-title {
+#             text-align: center;
+#             font-family: 'Times New Roman', Times, serif;
+#             font-weight: bold;
+#             font-size: 32px;
+#             color: white;
+#         }
+#         .centered-text {
+#             text-align: center;
+#             font-size: 18px;
+#             color: white;
+#         }
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#     )
+#     st.markdown(
+#         """
+#         <div class="times-title">
+#             AI Governance: Measuring Global Preparedness
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+
+#     # Add toggle button for resetting view
+#     if "highlight_view" not in st.session_state:
+#         st.session_state.highlight_view = True
+
+#     toggle_view = st.button("Reset View")
+#     if toggle_view:
+#         st.session_state.highlight_view = not st.session_state.highlight_view
+
+#     # Determine the map type based on the toggle state
+#     if st.session_state.highlight_view:
+#         # Highlight view: Highlight specific countries
+#         highlight_countries = ['United States of America', 'India', 'Afghanistan']
+#         rankings_df['Color'] = rankings_df['Country'].apply(
+#             lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
+#         )
+#         # Define color map for highlight view
+#         color_discrete_map = {
+#             'Highlighted': 'gold',
+#             'Normal': 'lightgrey'
+#         }
+
+#         fig_map = px.choropleth(
+#             rankings_df,
+#             locations='ISO3',
+#             color='Color',
+#             hover_name='Country',
+#             hover_data={'Index score': True, 'Color': False},
+#             color_discrete_map=color_discrete_map,
+#             projection="natural earth"
+#         )
+
+#         # Zoom into the Indian subcontinent
+#         fig_map.update_geos(
+#             center=dict(lat=20, lon=80),
+#             projection_scale=2.5
+#         )
+
+#         # Extract Index scores for highlighted countries
+#         india_value = rankings_df.loc[rankings_df['Country'] == 'India', 'Index score'].values[0]
+#         usa_value = rankings_df.loc[rankings_df['Country'] == 'United States of America', 'Index score'].values[0]
+#         afghanistan_value = rankings_df.loc[rankings_df['Country'] == 'Afghanistan', 'Index score'].values[0]
+
+#         # Add annotations for highlighted countries
+#         fig_map.update_layout(
+#             annotations=[
+#                 dict(
+#                     x=0.5,  # Center the legend horizontally
+#                     y=0.1,  # Place it near the bottom
+#                     xanchor='center',
+#                     yanchor='middle',
+#                     text=(
+#                         f"<b>Highlighted Countries:</b><br>"
+#                         f"<b>India's Index Score:</b> {india_value:.2f}<br>"
+#                         f"<b>USA's Index Score:</b> {usa_value:.2f}<br>"
+#                         f"<b>Afghanistan's Index Score:</b> {afghanistan_value:.2f}"
+#                     ),
+#                     showarrow=False,
+#                     font=dict(size=14, color="black"),
+#                     bgcolor="rgba(255, 255, 255, 0.7)",  # Semi-transparent white background
+#                     bordercolor="black",
+#                     borderwidth=1
+#                 )
+#             ]
+#         )
+
+#     else:
+#         # Normal view: Choropleth based on index values
+#         fig_map = px.choropleth(
+#             rankings_df,
+#             locations='ISO3',
+#             color='Index score',
+#             hover_name='Country',
+#             color_continuous_scale='Viridis',
+#             projection="natural earth"
+#         )
+
+#         # Display the entire map
+#         fig_map.update_geos(
+#             center=dict(lat=0, lon=0),
+#             projection_scale=1.1
+#         )
+
+#     # Layout adjustments
+#     fig_map.update_layout(
+#         margin=dict(l=0, r=0, t=0, b=0),
+#         geo=dict(
+#             showframe=False,
+#             showcoastlines=True,
+#             coastlinecolor="Gray",
+#             landcolor="white",
+#             oceancolor="lightblue",
+#             showocean=True,
+#         ),
+#         showlegend=False,
+#     )
+
+#     # Render the map
+#     st.plotly_chart(fig_map, use_container_width=True)
 
 # 2. AI Governance by Development Status
 with col2:
