@@ -335,48 +335,36 @@ with col1:
     if toggle_view:
         st.session_state.highlight_view = not st.session_state.highlight_view
 
-    # Determine the highlighted countries based on the toggle state
+    # Determine the map type based on the toggle state
     if st.session_state.highlight_view:
+        # Highlight view: Highlight specific countries
         highlight_countries = ['United States of America', 'India', 'Afghanistan']
-    else:
-        highlight_countries = []  # No highlighted countries in normal view
+        rankings_df['Color'] = rankings_df['Country'].apply(
+            lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
+        )
+        # Define color map for highlight view
+        color_discrete_map = {
+            'Highlighted': 'gold',
+            'Normal': 'lightgrey'
+        }
 
-    # Apply highlighting logic
-    rankings_df['Highlight'] = rankings_df['Country'].apply(
-        lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
-    )
+        fig_map = px.choropleth(
+            rankings_df,
+            locations='ISO3',
+            color='Color',
+            hover_name='Country',
+            hover_data={'Index score': True, 'Color': False},
+            color_discrete_map=color_discrete_map,
+            projection="natural earth"
+        )
 
-    # Define color map for highlighted countries
-    color_discrete_map = {
-        'Highlighted': 'gold',
-        'Normal': 'lightgrey'
-    }
-
-    # Create the choropleth map
-    fig_map = px.choropleth(
-        rankings_df,
-        locations='ISO3',
-        color='Highlight',
-        hover_name='Country',
-        hover_data={'Index score': True, 'Highlight': False},
-        color_discrete_map=color_discrete_map,
-        projection="natural earth"
-    )
-
-    # Set the view: Default zoom into the Indian subcontinent or normal view
-    if st.session_state.highlight_view:
+        # Zoom into the Indian subcontinent
         fig_map.update_geos(
             center=dict(lat=20, lon=80),
             projection_scale=2.5
         )
-    else:
-        fig_map.update_geos(
-            center=dict(lat=0, lon=0),
-            projection_scale=1.1
-        )
 
-    # Extract Index scores for highlighted countries (only if in highlight view)
-    if st.session_state.highlight_view:
+        # Extract Index scores for highlighted countries
         india_value = rankings_df.loc[rankings_df['Country'] == 'India', 'Index score'].values[0]
         usa_value = rankings_df.loc[rankings_df['Country'] == 'United States of America', 'Index score'].values[0]
         afghanistan_value = rankings_df.loc[rankings_df['Country'] == 'Afghanistan', 'Index score'].values[0]
@@ -403,9 +391,23 @@ with col1:
                 )
             ]
         )
+
     else:
-        # Clear annotations in normal view
-        fig_map.update_layout(annotations=[])
+        # Normal view: Choropleth based on index values
+        fig_map = px.choropleth(
+            rankings_df,
+            locations='ISO3',
+            color='Index score',
+            hover_name='Country',
+            color_continuous_scale='Viridis',
+            projection="natural earth"
+        )
+
+        # Display the entire map
+        fig_map.update_geos(
+            center=dict(lat=0, lon=0),
+            projection_scale=1.1
+        )
 
     # Layout adjustments
     fig_map.update_layout(
@@ -423,6 +425,7 @@ with col1:
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
+
 
 
 
