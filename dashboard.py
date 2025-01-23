@@ -207,6 +207,97 @@ col1, col2 = st.columns([2, 1])
 
 #     # Render the map
 #     st.plotly_chart(fig_map, use_container_width=True)
+# with col1:
+#     st.markdown(
+#         """
+#         <style>
+#         .times-title {
+#             text-align: center;
+#             font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+#             font-weight: bold; /* Bold text */
+#             font-size: 32px; /* Adjust font size */
+#             color: white; /* Text color */
+#         }
+#         .centered-text {
+#             text-align: center;
+#             font-size: 18px; /* Adjust size for the description */
+#             color: white; /* Color of the text */
+#         }
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#     )
+#     st.markdown(
+#         """
+#         <div class="times-title">
+#             AI Governance: Measuring Global Preparedness
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+
+#     # Filter the dataset to highlight India only
+#     rankings_df['Highlight'] = rankings_df['Country'].apply(
+#         lambda x: 'Highlighted' if x == 'India' else 'Normal'
+#     )
+
+#     # Define custom color scale to highlight India
+#     color_scale = [
+#         (0, 'lightgrey'),  # Default color for other countries
+#         (0.5, 'lightgrey'),
+#         (0.5, 'gold'),  # Highlight India
+#         (1, 'gold')
+#     ]
+
+#     # Choropleth map
+#     fig_map = px.choropleth(
+#         rankings_df,
+#         locations='ISO3',
+#         color='Highlight',
+#         hover_name='Country',
+#         hover_data={'Index score': True, 'Highlight': False},  # Display the index score in hover
+#         color_discrete_map={'Highlighted': 'gold', 'Normal': 'lightgrey'},  # Use discrete colors
+#         projection="natural earth"
+#     )
+
+#     # Emphasize India's value in the hover and visualization
+#     india_value = rankings_df[rankings_df['Country'] == 'India']['Index score'].values[0]
+#     fig_map.update_traces(
+#         hovertemplate=(
+#             "<b>%{hovertext}</b><br>"
+#             "Index score: %{customdata[0]:.2f}<br>"
+#             if "India" in rankings_df['Country'].values else None
+#         )
+#     )
+
+#     # Layout adjustments for the map
+#     fig_map.update_layout(
+#         margin=dict(l=0, r=0, t=0, b=0),
+#         geo=dict(
+#             showframe=False,
+#             showcoastlines=True,
+#             coastlinecolor="Gray",
+#             landcolor="white",
+#             oceancolor="lightblue",
+#             showocean=True,
+#             projection_scale=1.1,
+#         ),
+#         annotations=[
+#             dict(
+#                 x=0.5, y=0.1, xanchor='center', yanchor='middle',
+#                 text=f"<b>India's Index Score: {india_value:.2f}</b>",
+#                 showarrow=False,
+#                 font=dict(size=16, color="black"),
+#                 bgcolor="gold",  # Background to match highlight
+#                 bordercolor="black",
+#                 borderwidth=1
+#             )
+#         ]
+#     )
+
+#     # Render the map
+#     st.plotly_chart(fig_map, use_container_width=True)
+
 with col1:
     st.markdown(
         """
@@ -236,41 +327,58 @@ with col1:
         unsafe_allow_html=True
     )
 
-    # Filter the dataset to highlight India only
+    # Highlight countries
+    highlight_countries = ['United States of America', 'India', 'Afghanistan']
     rankings_df['Highlight'] = rankings_df['Country'].apply(
-        lambda x: 'Highlighted' if x == 'India' else 'Normal'
+        lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
     )
 
-    # Define custom color scale to highlight India
-    color_scale = [
-        (0, 'lightgrey'),  # Default color for other countries
-        (0.5, 'lightgrey'),
-        (0.5, 'gold'),  # Highlight India
-        (1, 'gold')
-    ]
+    # Define color map
+    color_discrete_map = {'Highlighted': 'gold', 'Normal': 'lightgrey'}
 
-    # Choropleth map
+    # Create choropleth map
     fig_map = px.choropleth(
         rankings_df,
         locations='ISO3',
         color='Highlight',
         hover_name='Country',
-        hover_data={'Index score': True, 'Highlight': False},  # Display the index score in hover
-        color_discrete_map={'Highlighted': 'gold', 'Normal': 'lightgrey'},  # Use discrete colors
+        hover_data={'Index score': True, 'Highlight': False},
+        color_discrete_map=color_discrete_map,
         projection="natural earth"
     )
 
-    # Emphasize India's value in the hover and visualization
-    india_value = rankings_df[rankings_df['Country'] == 'India']['Index score'].values[0]
-    fig_map.update_traces(
-        hovertemplate=(
-            "<b>%{hovertext}</b><br>"
-            "Index score: %{customdata[0]:.2f}<br>"
-            if "India" in rankings_df['Country'].values else None
-        )
+    # Default zoom into Indian subcontinent
+    fig_map.update_geos(
+        center=dict(lat=20, lon=80),  # Coordinates for Indian subcontinent
+        projection_scale=2.5  # Zoom level
     )
 
-    # Layout adjustments for the map
+    # Highlight markers for USA, India, and Afghanistan
+    highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
+    for _, row in highlighted_data.iterrows():
+        fig_map.add_scattergeo(
+            locations=[row['ISO3']],
+            locationmode='ISO-3',
+            text=f"{row['Country']} (Index: {row['Index score']:.2f})",
+            marker=dict(size=12, color='red', symbol='circle'),
+            name=row['Country']
+        )
+
+    # Add Reset View button
+    toggle_view = st.button("Reset View")
+    if toggle_view:
+        if fig_map.layout.geo.center.lon == 80:  # If in default view, reset to global view
+            fig_map.update_geos(
+                center=dict(lat=0, lon=0),  # Center the map globally
+                projection_scale=1.1  # Default zoom level
+            )
+        else:  # If in global view, reset to default Indian subcontinent view
+            fig_map.update_geos(
+                center=dict(lat=20, lon=80),  # Coordinates for Indian subcontinent
+                projection_scale=2.5  # Zoom level
+            )
+
+    # Layout adjustments
     fig_map.update_layout(
         margin=dict(l=0, r=0, t=0, b=0),
         geo=dict(
@@ -280,24 +388,19 @@ with col1:
             landcolor="white",
             oceancolor="lightblue",
             showocean=True,
-            projection_scale=1.1,
         ),
-        annotations=[
-            dict(
-                x=0.5, y=0.1, xanchor='center', yanchor='middle',
-                text=f"<b>India's Index Score: {india_value:.2f}</b>",
-                showarrow=False,
-                font=dict(size=16, color="black"),
-                bgcolor="gold",  # Background to match highlight
-                bordercolor="black",
-                borderwidth=1
-            )
-        ]
+        legend=dict(
+            title="Highlighted Countries",
+            x=0.8,
+            y=0.9,
+            bgcolor="rgba(255,255,255,0.8)",
+            bordercolor="black",
+            borderwidth=1
+        )
     )
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
-
 
 
 
