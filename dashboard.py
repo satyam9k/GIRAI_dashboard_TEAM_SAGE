@@ -314,12 +314,6 @@ with col1:
             font-size: 18px;
             color: white;
         }
-        .custom-legend {
-            text-align: center;
-            font-size: 14px;
-            color: black;
-            margin-top: 10px;
-        }
         </style>
         """,
         unsafe_allow_html=True
@@ -388,7 +382,7 @@ with col1:
 
     # Layout adjustments
     fig_map.update_layout(
-        margin=dict(l=0, r=0, t=0, b=50),
+        margin=dict(l=0, r=0, t=0, b=0),
         geo=dict(
             showframe=False,
             showcoastlines=True,
@@ -397,24 +391,30 @@ with col1:
             oceancolor="lightblue",
             showocean=True,
         ),
-        showlegend=False
+        showlegend=False,
+        annotations=[
+            dict(
+                x=0.5,  # Center the legend horizontally
+                y=0.05,  # Place it near the bottom
+                xanchor='center',
+                yanchor='middle',
+                text=(
+                    f"<b>Highlighted Countries:</b><br>"
+                    f"<b>India:</b> {india_value:.2f}<br>"
+                    f"<b>USA:</b> {usa_value:.2f}<br>"
+                    f"<b>Afghanistan:</b> {afghanistan_value:.2f}"
+                ),
+                showarrow=False,
+                font=dict(size=14, color="black"),
+                bgcolor="rgba(255, 255, 255, 0.7)",  # Semi-transparent white background
+                bordercolor="black",
+                borderwidth=1
+            )
+        ]
     )
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
-
-    # Custom legend for highlighted countries
-    st.markdown(
-        f"""
-        <div class="custom-legend">
-            <b>Highlighted Countries:</b><br>
-            <b>India:</b> {india_value:.2f}<br>
-            <b>USA:</b> {usa_value:.2f}<br>
-            <b>Afghanistan:</b> {afghanistan_value:.2f}
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
 
 
 
