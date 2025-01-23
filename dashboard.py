@@ -377,25 +377,53 @@ with col1:
             projection_scale=2.5  # Zoom level
         )
 
+    # Extract Index scores for highlighted countries
+    india_value = rankings_df.loc[rankings_df['Country'] == 'India', 'Index score'].values[0]
+    usa_value = rankings_df.loc[rankings_df['Country'] == 'United States of America', 'Index score'].values[0]
+    afghanistan_value = rankings_df.loc[rankings_df['Country'] == 'Afghanistan', 'Index score'].values[0]
+
     # Add annotations for highlighted countries
-    highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
-    annotations = []
-    for i, row in enumerate(highlighted_data.itertuples(), start=1):
-        annotations.append(
-            dict(
-                x=0.5,  # Centered horizontally
-                y=-0.15 - (i * 0.05),  # Vertical offset for each country
-                text=f"<b>{row.Country}:</b> {row.Index score:.2f}",
-                showarrow=False,
-                font=dict(size=14, color="black"),  # Black text for better visibility
-                align="center",
-                xref="paper",
-                yref="paper",
-                bgcolor="white",
-                bordercolor="black",
-                borderwidth=1
-            )
+    annotations = [
+        dict(
+            x=0.5,
+            y=-0.2,  # Position for India
+            text=f"<b>India's Index Score: {india_value:.2f}</b>",
+            showarrow=False,
+            font=dict(size=14, color="black"),
+            align="center",
+            xref="paper",
+            yref="paper",
+            bgcolor="white",
+            bordercolor="black",
+            borderwidth=1
+        ),
+        dict(
+            x=0.5,
+            y=-0.25,  # Position for USA
+            text=f"<b>USA's Index Score: {usa_value:.2f}</b>",
+            showarrow=False,
+            font=dict(size=14, color="black"),
+            align="center",
+            xref="paper",
+            yref="paper",
+            bgcolor="white",
+            bordercolor="black",
+            borderwidth=1
+        ),
+        dict(
+            x=0.5,
+            y=-0.3,  # Position for Afghanistan
+            text=f"<b>Afghanistan's Index Score: {afghanistan_value:.2f}</b>",
+            showarrow=False,
+            font=dict(size=14, color="black"),
+            align="center",
+            xref="paper",
+            yref="paper",
+            bgcolor="white",
+            bordercolor="black",
+            borderwidth=1
         )
+    ]
 
     # Apply annotations to the layout
     fig_map.update_layout(
@@ -414,6 +442,7 @@ with col1:
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
+
 
 
 
