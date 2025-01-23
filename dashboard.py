@@ -314,6 +314,12 @@ with col1:
             font-size: 18px;
             color: white;
         }
+        .custom-legend {
+            text-align: center;
+            font-size: 14px;
+            color: black;
+            margin-top: 10px;
+        }
         </style>
         """,
         unsafe_allow_html=True
@@ -380,40 +386,7 @@ with col1:
     usa_value = rankings_df.loc[rankings_df['Country'] == 'United States of America', 'Index score'].values[0]
     afghanistan_value = rankings_df.loc[rankings_df['Country'] == 'Afghanistan', 'Index score'].values[0]
 
-    # Add annotations for highlighted countries
-    annotations = [
-        dict(
-            x=0.5,
-            y=-0.1,
-            text=f"<b>India's Index Score: {india_value:.2f}</b>",
-            showarrow=False,
-            font=dict(size=12, color="black"),
-            align="center",
-            xref="paper",
-            yref="paper"
-        ),
-        dict(
-            x=0.5,
-            y=-0.15,
-            text=f"<b>USA's Index Score: {usa_value:.2f}</b>",
-            showarrow=False,
-            font=dict(size=12, color="black"),
-            align="center",
-            xref="paper",
-            yref="paper"
-        ),
-        dict(
-            x=0.5,
-            y=-0.2,
-            text=f"<b>Afghanistan's Index Score: {afghanistan_value:.2f}</b>",
-            showarrow=False,
-            font=dict(size=12, color="black"),
-            align="center",
-            xref="paper",
-            yref="paper"
-        )
-    ]
-
+    # Layout adjustments
     fig_map.update_layout(
         margin=dict(l=0, r=0, t=0, b=50),
         geo=dict(
@@ -424,12 +397,24 @@ with col1:
             oceancolor="lightblue",
             showocean=True,
         ),
-        annotations=annotations,
         showlegend=False
     )
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
+
+    # Custom legend for highlighted countries
+    st.markdown(
+        f"""
+        <div class="custom-legend">
+            <b>Highlighted Countries:</b><br>
+            <b>India:</b> {india_value:.2f}<br>
+            <b>USA:</b> {usa_value:.2f}<br>
+            <b>Afghanistan:</b> {afghanistan_value:.2f}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 
