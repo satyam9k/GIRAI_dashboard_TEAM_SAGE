@@ -403,7 +403,7 @@ with col3:
     )
 
     # Add vertical spacing above the heatmap to move it down
-    st.markdown("<div style='height: 30px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 100px;'></div>", unsafe_allow_html=True)
 
     # Define thematic areas
     thematic_areas_to_include = [
