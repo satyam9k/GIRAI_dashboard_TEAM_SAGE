@@ -395,14 +395,14 @@ with col1:
         annotations=[
             dict(
                 x=0.5,  # Center the legend horizontally
-                y=0.05,  # Place it near the bottom
+                y=0.1,  # Place it near the bottom
                 xanchor='center',
                 yanchor='middle',
                 text=(
                     f"<b>Highlighted Countries:</b><br>"
-                    f"<b>India:</b> {india_value:.2f}<br>"
-                    f"<b>USA:</b> {usa_value:.2f}<br>"
-                    f"<b>Afghanistan:</b> {afghanistan_value:.2f}"
+                    f"<b>India's Index Score:</b> {india_value:.2f}<br>"
+                    f"<b>USA's Index Score:</b> {usa_value:.2f}<br>"
+                    f"<b>Afghanistan's Index Score:</b> {afghanistan_value:.2f}"
                 ),
                 showarrow=False,
                 font=dict(size=14, color="black"),
