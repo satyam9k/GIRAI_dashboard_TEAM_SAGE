@@ -167,10 +167,9 @@ with col1:
             projection="natural earth"
         )
 
-        # Zoom into the Indian subcontinent
         fig_map.update_geos(
             center=dict(lat=20, lon=80),
-            projection_scale=2.5
+            projection_scale=2.2
         )
 
         # Extract Index scores for highlighted countries
