@@ -327,14 +327,17 @@ with col1:
         unsafe_allow_html=True
     )
 
-    # Highlight countries
+    # Highlighted countries
     highlight_countries = ['United States of America', 'India', 'Afghanistan']
     rankings_df['Highlight'] = rankings_df['Country'].apply(
         lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
     )
 
-    # Define color map for highlighted countries and grey for others
-    color_discrete_map = {'Highlighted': 'gold', 'Normal': 'lightgrey'}
+    # Define color map for highlighted countries
+    color_discrete_map = {
+        'Highlighted': 'gold',  # Highlighted countries
+        'Normal': 'lightgrey'   # Non-highlighted countries
+    }
 
     # Create the choropleth map
     fig_map = px.choropleth(
@@ -345,13 +348,6 @@ with col1:
         hover_data={'Index score': True, 'Highlight': False},
         color_discrete_map=color_discrete_map,
         projection="natural earth"
-    )
-
-    # Customize hover label to display values in black
-    fig_map.update_traces(
-        hoverlabel=dict(
-            font=dict(color="black")  # Set hover text color to black
-        )
     )
 
     # Default view: Zoom into the Indian subcontinent
@@ -381,7 +377,27 @@ with col1:
             projection_scale=2.5  # Zoom level
         )
 
-    # Layout adjustments
+    # Add annotations for highlighted countries
+    highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
+    annotations = []
+    for i, row in highlighted_data.iterrows():
+        annotations.append(
+            dict(
+                x=0.5,  # Centered horizontally
+                y=-0.15 - (i * 0.05),  # Vertical offset for each country
+                text=f"<b>{row['Country']}:</b> {row['Index score']:.2f}",
+                showarrow=False,
+                font=dict(size=14, color="black"),  # Black text for better visibility
+                align="center",
+                xref="paper",
+                yref="paper",
+                bgcolor="white",
+                bordercolor="black",
+                borderwidth=1
+            )
+        )
+
+    # Apply annotations to the layout
     fig_map.update_layout(
         margin=dict(l=0, r=0, t=0, b=0),
         geo=dict(
@@ -392,19 +408,11 @@ with col1:
             oceancolor="lightblue",
             showocean=True,
         ),
-        legend=dict(
-            title="Highlighted Countries",
-            x=0.8,
-            y=0.9,
-            bgcolor="rgba(255,255,255,0.8)",
-            bordercolor="black",
-            borderwidth=1
-        )
+        annotations=annotations
     )
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
-
 
 
 # 2. AI Governance by Development Status
