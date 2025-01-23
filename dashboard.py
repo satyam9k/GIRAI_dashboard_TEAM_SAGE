@@ -140,7 +140,7 @@ with col1:
     if "highlight_view" not in st.session_state:
         st.session_state.highlight_view = False  # Default is normal view
 
-    toggle_view = st.button("Change View📍")
+    toggle_view = st.button("Change View📌")
     if toggle_view:
         st.session_state.highlight_view = not st.session_state.highlight_view
 
