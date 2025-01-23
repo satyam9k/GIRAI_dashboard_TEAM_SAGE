@@ -16,7 +16,7 @@ st.markdown(
     .centered-title {
         text-align: center;
         font-size: 34px; /* Adjust size for the title */
-        color: white; /* Color of the text */
+        color: ivory white; /* Color of the text */
         font-weight: bold;
         margin-bottom: 10px;
         padding: 10px; /* Adds spacing inside the border */
