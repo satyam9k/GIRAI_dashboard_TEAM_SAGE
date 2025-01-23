@@ -458,7 +458,7 @@ with col3:
 
     # Update heatmap layout
     fig_heatmap.update_layout(
-        margin=dict(l=10, r=10, t=30, b=300),  # Increase bottom margin
+        margin=dict(l=10, r=10, t=30, b=30),  # Increase bottom margin
         xaxis=dict(
             title='Thematic Areas',
             tickangle=45
