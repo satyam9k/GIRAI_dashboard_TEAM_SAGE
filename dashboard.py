@@ -236,53 +236,39 @@ with col1:
         unsafe_allow_html=True
     )
 
-    highlight_countries = ['United States of America', 'India', 'Afghanistan']
-
-    country_abbreviations = {
-        'United States of America': 'USA',
-        'India': 'IND',
-        'Afghanistan': 'AFG',
-        'Netherlands': 'NLD',
-        'Poland': 'POL',
-        'Albania': 'ALB',
-        'Singapore': 'SGP',
-        'China': 'CHN',
-        'Myanmar': 'MMR',
-        'Brazil': 'BRA',
-        'Haiti': 'HTI'
-    }
-
-    # Add a column to flag highlighted countries
+    # Filter the dataset to highlight India only
     rankings_df['Highlight'] = rankings_df['Country'].apply(
-        lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
+        lambda x: 'Highlighted' if x == 'India' else 'Normal'
     )
+
+    # Define custom color scale to highlight India
+    color_scale = [
+        (0, 'lightgrey'),  # Default color for other countries
+        (0.5, 'lightgrey'),
+        (0.5, 'gold'),  # Highlight India
+        (1, 'gold')
+    ]
 
     # Choropleth map
     fig_map = px.choropleth(
         rankings_df,
         locations='ISO3',
-        color='Index score',
+        color='Highlight',
         hover_name='Country',
-        color_continuous_scale='Viridis',
-        projection="natural earth",
+        hover_data={'Index score': True, 'Highlight': False},  # Display the index score in hover
+        color_discrete_map={'Highlighted': 'gold', 'Normal': 'lightgrey'},  # Use discrete colors
+        projection="natural earth"
     )
 
-    # Add markers for the highlighted countries with abbreviations
-    highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
-    for i, row in highlighted_data.iterrows():
-        marker_color = 'gold' if row['Country'] == 'India' else 'red'  # Highlight India with gold
-        marker_size = 15 if row['Country'] == 'India' else 10  # Larger marker for India
-        fig_map.add_scattergeo(
-            locations=[row['ISO3']],
-            locationmode='ISO-3',
-            text=row['Country'],
-            marker=dict(
-                size=marker_size,  # Marker size
-                color=marker_color,  # Color based on country
-                symbol='circle'
-            ),
-            name=f"{country_abbreviations.get(row['Country'], row['Country'])} (Index: {row['Index score']:.1f})",  # Country abbreviation with index score
+    # Emphasize India's value in the hover and visualization
+    india_value = rankings_df[rankings_df['Country'] == 'India']['Index score'].values[0]
+    fig_map.update_traces(
+        hovertemplate=(
+            "<b>%{hovertext}</b><br>"
+            "Index score: %{customdata[0]:.2f}<br>"
+            if "India" in rankings_df['Country'].values else None
         )
+    )
 
     # Layout adjustments for the map
     fig_map.update_layout(
@@ -296,19 +282,22 @@ with col1:
             showocean=True,
             projection_scale=1.1,
         ),
-        legend=dict(
-            title="Highlights",
-            x=0.8,  # Position the legend on the right
-            y=0.9,
-            bgcolor="rgba(255,255,255,0.8)",  # Semi-transparent background
-            font=dict(color="black"),  # Set legend text color to black
-            bordercolor="black",  # Border color for the legend
-            borderwidth=2  # Border width for better visibility
-        )
+        annotations=[
+            dict(
+                x=0.5, y=0.1, xanchor='center', yanchor='middle',
+                text=f"<b>India's Index Score: {india_value:.2f}</b>",
+                showarrow=False,
+                font=dict(size=16, color="black"),
+                bgcolor="gold",  # Background to match highlight
+                bordercolor="black",
+                borderwidth=1
+            )
+        ]
     )
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
+
 
 
 
