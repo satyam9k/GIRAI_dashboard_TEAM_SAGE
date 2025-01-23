@@ -107,6 +107,106 @@ rankings_df, data_df = load_data()
 col1, col2 = st.columns([2, 1])
 
 # 1. Geographic Heat Map
+# with col1:
+#     st.markdown(
+#         """
+#         <style>
+#         .times-title {
+#             text-align: center;
+#             font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+#             font-weight: bold; /* Bold text */
+#             font-size: 32px; /* Adjust font size */
+#             color: white; /* Text color */
+#         }
+#         .centered-text {
+#             text-align: center;
+#             font-size: 18px; /* Adjust size for the description */
+#             color: white; /* Color of the text */
+#         }
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#     )
+#     st.markdown(
+#         """
+#         <div class="times-title">
+#             AI Governance: Measuring Global Preparedness
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+
+#     highlight_countries = ['United States of America', 'India', 'Afghanistan']
+
+#     country_abbreviations = {
+#         'United States of America': 'USA',
+#         'India': 'IND',
+#         'Afghanistan': 'AFG',
+#         'Netherlands': 'NLD',
+#         'Poland': 'POL',
+#         'Albania': 'ALB',
+#         'Singapore': 'SGP',
+#         'China': 'CHN',
+#         'Myanmar': 'MMR',
+#         'Brazil': 'BRA',
+#         'Haiti': 'HTI'
+#     }
+
+#     # Add a column to flag highlighted countries
+#     rankings_df['Highlight'] = rankings_df['Country'].apply(
+#         lambda x: 'Highlighted' if x in highlight_countries else 'Normal'
+#     )
+
+#     # Choropleth map
+#     fig_map = px.choropleth(
+#         rankings_df,
+#         locations='ISO3',
+#         color='Index score',
+#         hover_name='Country',
+#         color_continuous_scale='Viridis',
+#         projection="natural earth",
+#     )
+
+#     # Add markers for the highlighted countries with abbreviations
+#     highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
+#     for i, row in highlighted_data.iterrows():
+#         fig_map.add_scattergeo(
+#             locations=[row['ISO3']],
+#             locationmode='ISO-3',
+#             text=row['Country'],
+#             marker=dict(
+#                 size=10,  # Marker size
+#                 color='red',  # Highlight color
+#                 symbol='circle'
+#             ),
+#             name=f"{country_abbreviations.get(row['Country'], row['Country'])} (Index: {row['Index score']:.1f})",  # Country abbreviation with index score
+#         )
+
+#     # Layout adjustments for the map
+#     fig_map.update_layout(
+#         margin=dict(l=0, r=0, t=0, b=0),
+#         geo=dict(
+#             showframe=False,
+#             showcoastlines=True,
+#             coastlinecolor="Gray",
+#             landcolor="white",
+#             oceancolor="lightblue",
+#             showocean=True,
+#             projection_scale=1.1,
+#         ),
+#         legend=dict(
+#             title="Highlights",
+#             x=0.8,  # Position the legend on the right
+#             y=0.9,
+#             bgcolor="rgba(255,255,255,0.8)",  # Semi-transparent background
+#             font=dict(color="black"),  # Set legend text color to black
+#             bordercolor="black",  # Border color for the legend
+#             borderwidth=2  # Border width for better visibility
+#         )
+#     )
+
+#     # Render the map
+#     st.plotly_chart(fig_map, use_container_width=True)
 with col1:
     st.markdown(
         """
@@ -170,13 +270,15 @@ with col1:
     # Add markers for the highlighted countries with abbreviations
     highlighted_data = rankings_df[rankings_df['Country'].isin(highlight_countries)]
     for i, row in highlighted_data.iterrows():
+        marker_color = 'gold' if row['Country'] == 'India' else 'red'  # Highlight India with gold
+        marker_size = 15 if row['Country'] == 'India' else 10  # Larger marker for India
         fig_map.add_scattergeo(
             locations=[row['ISO3']],
             locationmode='ISO-3',
             text=row['Country'],
             marker=dict(
-                size=10,  # Marker size
-                color='red',  # Highlight color
+                size=marker_size,  # Marker size
+                color=marker_color,  # Color based on country
                 symbol='circle'
             ),
             name=f"{country_abbreviations.get(row['Country'], row['Country'])} (Index: {row['Index score']:.1f})",  # Country abbreviation with index score
@@ -207,6 +309,7 @@ with col1:
 
     # Render the map
     st.plotly_chart(fig_map, use_container_width=True)
+
 
 
 # 2. AI Governance by Development Status
