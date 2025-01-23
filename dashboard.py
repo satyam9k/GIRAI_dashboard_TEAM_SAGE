@@ -330,6 +330,7 @@ with col5:
         """,
         unsafe_allow_html=True
     )
+    st.markdown("<div style='height: 60px;'></div>", unsafe_allow_html=True)
 
     # Filter data
     filtered_rankings_df = rankings_df[rankings_df['GIRAI_region'] != 0]
