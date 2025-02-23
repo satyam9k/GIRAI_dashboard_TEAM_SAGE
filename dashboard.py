@@ -270,7 +270,13 @@ with col2:
         color='Development_Status',
     )
 
-    # Add average markers to the plot
+    fig_dev.update_traces(
+        hovertemplate='%{x}: <br>'  
+        + 'Index Score: %{y:.2f}<br>'  
+        + '<extra></extra>'  
+    )
+
+     # Add average markers to the plot (Avg dots)
     for status, avg in zip(avg_values['Development_Status'], avg_values['Index score']):
         fig_dev.add_trace(
             go.Scatter(
@@ -280,22 +286,20 @@ with col2:
                 marker=dict(color='black', size=10),
                 text=[f"Avg: {avg:.2f}"],
                 textposition='top right',
-                textfont=dict(color='cyan', size=14)
+                textfont=dict(color='cyan', size=14),
+                
+                hovertemplate=(
+                    'Development Status: %{x}<br>'  # Development Status
+                    'Min: %{customdata[0]}<br>'  # Min value
+                    'Max: %{customdata[1]}<br>'  # Max value
+                    'Median: %{customdata[2]}<br>'  # Median value
+                    'Mean: %{customdata[3]}<br>'  # Mean value
+                    'Avg: %{y:.2f}<br>'  # Average value at hover point
+                    '<extra></extra>'  # Remove extra hover info
+                ),
+                customdata=stats[['min', 'max', 'median', 'mean']].values  
             )
         )
-    # Customize hover to show detailed statistics
-    fig_dev.update_traces(
-        hovertemplate=(
-            '%{x}: <br>'  # Display Development Status
-            'Min: %{customdata[0]}<br>'  # Min value
-            'Max: %{customdata[1]}<br>'  # Max value
-            'Median: %{customdata[2]}<br>'  # Median value
-            'Mean: %{customdata[3]}<br>'  # Mean value
-            'Index Score: %{y:.2f}<br>'  # Display the value at hover point
-            '<extra></extra>'  # Remove extra hover info
-        ),
-        customdata=stats[['min', 'max', 'median', 'mean']].values  
-    )
 
     fig_dev.update_layout(
         showlegend=False,
