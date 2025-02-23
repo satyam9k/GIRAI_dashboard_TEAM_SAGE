@@ -341,6 +341,19 @@ with col5:
     # Assign bar colors based on region
     bar_colors = [region_colors.get(region, 'grey') for region in regional_avg.index]
 
+    # # Create bar chart
+    # fig_regional = go.Figure()
+    # fig_regional.add_trace(
+    #     go.Bar(
+    #         x=regional_avg.index,
+    #         y=regional_avg.values,
+    #         name='Regional Score',
+    #         marker=dict(color=bar_colors), 
+    #         text=np.round(regional_avg.values, 2), 
+    #         textposition='inside',  
+    #         textfont=dict(color='white')  
+    #     )
+    # )
     # Create bar chart
     fig_regional = go.Figure()
     fig_regional.add_trace(
@@ -349,9 +362,10 @@ with col5:
             y=regional_avg.values,
             name='Regional Score',
             marker=dict(color=bar_colors), 
-            text=np.round(regional_avg.values, 2), 
+            text=np.round(regional_avg.values, 2),  # Text inside the bars
             textposition='inside',  
-            textfont=dict(color='white')  
+            textfont=dict(color='white'),  
+            hovertemplate='%{x}: %{y:.2f}<extra></extra>'  # Custom hover template (No extra text)
         )
     )
 
