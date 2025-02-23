@@ -276,9 +276,10 @@ with col2:
 
     # Add average markers with detailed hover info
     for status, avg in zip(avg_values['Development_Status'], avg_values['Index score']):
+    # Get stats for the current development status
         stat_row = stats[stats['Development_Status'] == status]
         min_val, max_val, median_val, mean_val = stat_row[['min', 'max', 'median', 'mean']].values[0]
-
+    
         fig_dev.add_trace(
             go.Scatter(
                 x=[status],
@@ -297,10 +298,10 @@ with col2:
                     'Avg: %{y:.2f}<br>'
                     '<extra></extra>'
                 ),
-                customdata=[[min_val, max_val, median_val, mean_val]]  # Attach metrics as custom data
+                customdata=[[min_val, max_val, median_val, mean_val]]  # ✅ Corrected customdata format
             )
         )
-
+        
     fig_dev.update_layout(
         showlegend=False,
         margin=dict(l=0, r=0, t=30, b=0),
