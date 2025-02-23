@@ -272,8 +272,8 @@ with col2:
 
     # Ensure only relevant stats are displayed
     for trace in fig_dev.data:
-        if trace.name in ['upper fence', 'lower fence']:
-            trace.hoverinfo = "skip"  # Disables hover for fences
+        if trace.name in ["upper fence", "lower fence", "q1", "q3"]:
+            trace.hoverinfo = "skip"  
         else:
             trace.hovertemplate = (
                 '%{x}: <br>'
