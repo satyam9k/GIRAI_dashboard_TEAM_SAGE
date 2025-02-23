@@ -270,6 +270,7 @@ with col2:
         color='Development_Status',
     )
 
+    # Ensure only relevant stats are displayed
     fig_dev.update_traces(
         hovertemplate=(
             '%{x}: <br>'
