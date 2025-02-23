@@ -463,18 +463,7 @@ with col3:
         aggfunc='mean'
     )
 
-    # # Create the heatmap
-    # fig_heatmap = go.Figure(data=go.Heatmap(
-    #     z=thematic_by_development.values,
-    #     x=thematic_by_development.columns,
-    #     y=thematic_by_development.index,
-    #     text=np.round(thematic_by_development.values, 2),
-    #     texttemplate='%{text}',
-    #     textfont={"size": 10},
-    #     colorscale='RdBu',
-    #     showscale=True,
-    #     hoverongaps=False
-    # ))
+    # Create the heatmap
     fig_heatmap = go.Figure(data=go.Heatmap(
         z=thematic_by_development.values,
         x=thematic_by_development.columns,
