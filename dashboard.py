@@ -272,21 +272,13 @@ with col2:
 
     # Ensure only relevant stats are displayed
     for trace in fig_dev.data:
-        if trace.name in ["upper fence", "lower fence", "q1", "q3"]:
-            trace.hoverinfo = "skip"  
-        else:
-            trace.hovertemplate = (
-                '%{x}: <br>'
-                'Min: %{customdata[0]}<br>'
-                'Max: %{customdata[1]}<br>'
-                'Median: %{customdata[2]}<br>'
-                'Mean: %{customdata[3]:.2f}<br>'
-                '<extra></extra>'
-            )
-            trace.customdata = stats[['min', 'max', 'median', 'mean']].values
+        trace.hoverinfo = "skip"  
 
-    # Add average markers to the plot (Avg dots)
+    # Add average markers with detailed hover info
     for status, avg in zip(avg_values['Development_Status'], avg_values['Index score']):
+        stat_row = stats[stats['Development_Status'] == status]
+        min_val, max_val, median_val, mean_val = stat_row[['min', 'max', 'median', 'mean']].values[0]
+    
         fig_dev.add_trace(
             go.Scatter(
                 x=[status],
@@ -298,9 +290,13 @@ with col2:
                 textfont=dict(color='cyan', size=14),
                 hovertemplate=(
                     'Development Status: %{x}<br>'
+                    'Min: {:.2f}<br>'
+                    'Max: {:.2f}<br>'
+                    'Median: {:.2f}<br>'
+                    'Mean: {:.2f}<br>'
                     'Avg: %{y:.2f}<br>'
                     '<extra></extra>'
-                )  # Shows only "Development Status" and "Avg"
+                ).format(min_val, max_val, median_val, mean_val)  
             )
         )
 
