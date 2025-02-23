@@ -280,6 +280,19 @@ with col2:
                 textfont=dict(color='cyan', size=14)
             )
         )
+    # Customize hover to show detailed statistics
+    fig_dev.update_traces(
+        hovertemplate=(
+            '%{x}: <br>'  # Display Development Status
+            'Min: %{customdata[0]}<br>'  # Min value
+            'Max: %{customdata[1]}<br>'  # Max value
+            'Median: %{customdata[2]}<br>'  # Median value
+            'Mean: %{customdata[3]}<br>'  # Mean value
+            'Index Score: %{y:.2f}<br>'  # Display the value at hover point
+            '<extra></extra>'  # Remove extra hover info
+        ),
+        customdata=stats[['min', 'max', 'median', 'mean']].values  
+    )
 
     fig_dev.update_layout(
         showlegend=False,
