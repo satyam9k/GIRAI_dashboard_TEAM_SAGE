@@ -271,17 +271,19 @@ with col2:
     )
 
     # Ensure only relevant stats are displayed
-    fig_dev.update_traces(
-        hovertemplate=(
+    for trace in fig_dev.data:
+    if trace.name in ['upper fence', 'lower fence']:
+        trace.hoverinfo = "skip"  # Disables hover for fences
+    else:
+        trace.hovertemplate = (
             '%{x}: <br>'
             'Min: %{customdata[0]}<br>'
             'Max: %{customdata[1]}<br>'
             'Median: %{customdata[2]}<br>'
             'Mean: %{customdata[3]:.2f}<br>'
             '<extra></extra>'
-        ),
-        customdata=stats[['min', 'max', 'median', 'mean']].values  
-    )
+        )
+        trace.customdata = stats[['min', 'max', 'median', 'mean']].values
 
     # Add average markers to the plot (Avg dots)
     for status, avg in zip(avg_values['Development_Status'], avg_values['Index score']):
