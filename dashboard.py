@@ -259,6 +259,9 @@ with col2:
     # Calculate average values
     avg_values = filtered_data.groupby('Development_Status')['Index score'].mean().reset_index()
 
+    # Calculate other statistics for hover
+    stats = filtered_data.groupby('Development_Status')['Index score'].agg(['min', 'max', 'median', 'mean']).reset_index()
+
     # Boxplot
     fig_dev = px.box(
         filtered_data,
