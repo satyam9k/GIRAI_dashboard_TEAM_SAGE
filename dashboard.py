@@ -271,8 +271,11 @@ with col2:
     )
 
     # Ensure only relevant stats are displayed
-    for trace in fig_dev.data:
-        trace.hoverinfo = "skip"  
+    fig_dev.update_traces(
+        hoverinfo="skip",  
+        hovertemplate=None,  
+        selector=dict(type='box')  
+    )
 
     # Add average markers with detailed hover info
     for status, avg in zip(avg_values['Development_Status'], avg_values['Index score']):
