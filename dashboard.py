@@ -365,19 +365,7 @@ with col5:
     # Assign bar colors based on region
     bar_colors = [region_colors.get(region, 'grey') for region in regional_avg.index]
 
-    # # Create bar chart
-    # fig_regional = go.Figure()
-    # fig_regional.add_trace(
-    #     go.Bar(
-    #         x=regional_avg.index,
-    #         y=regional_avg.values,
-    #         name='Regional Score',
-    #         marker=dict(color=bar_colors), 
-    #         text=np.round(regional_avg.values, 2), 
-    #         textposition='inside',  
-    #         textfont=dict(color='white')  
-    #     )
-    # )
+   
     # Create bar chart
     fig_regional = go.Figure()
     fig_regional.add_trace(
@@ -475,17 +463,29 @@ with col3:
         aggfunc='mean'
     )
 
-    # Create the heatmap
+    # # Create the heatmap
+    # fig_heatmap = go.Figure(data=go.Heatmap(
+    #     z=thematic_by_development.values,
+    #     x=thematic_by_development.columns,
+    #     y=thematic_by_development.index,
+    #     text=np.round(thematic_by_development.values, 2),
+    #     texttemplate='%{text}',
+    #     textfont={"size": 10},
+    #     colorscale='RdBu',
+    #     showscale=True,
+    #     hoverongaps=False
+    # ))
     fig_heatmap = go.Figure(data=go.Heatmap(
         z=thematic_by_development.values,
         x=thematic_by_development.columns,
         y=thematic_by_development.index,
         text=np.round(thematic_by_development.values, 2),
-        texttemplate='%{text}',
+        texttemplate='%{text}',  # This keeps the text labels in the heatmap
         textfont={"size": 10},
         colorscale='RdBu',
         showscale=True,
-        hoverongaps=False
+        hoverongaps=False,
+        hovertemplate="Thematic Area: %{x}<br>Development Status: %{y}<br>Score: %{z:.2f}<extra></extra>"  # This removes the duplicate z-value
     ))
 
     # Update heatmap layout
