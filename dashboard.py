@@ -291,7 +291,7 @@ with col2:
                 marker=dict(color='black', size=10),
                 text=[f"Avg: {avg:.2f}"],
                 textposition='top right',
-                textfont=dict(color='cyan', size=14),
+                textfont=dict(color='black', size=14),
                 hovertemplate=(
                     'Development Status: %{x}<br>'
                     'Min: %{customdata[0]:.2f}<br>'
@@ -301,15 +301,32 @@ with col2:
                     'Avg: %{y:.2f}<br>'
                     '<extra></extra>'
                 ),
-                customdata=[[min_val, max_val, median_val, mean_val]]  # ✅ Corrected customdata format
+                customdata=[[min_val, max_val, median_val, mean_val]]  
             )
         )
         
+    # fig_dev.update_layout(
+    #     showlegend=False,
+    #     margin=dict(l=0, r=0, t=30, b=0),
+    #     xaxis_title="Development Status",
+    #     yaxis_title="Index Score",
+    # )
+    
     fig_dev.update_layout(
         showlegend=False,
         margin=dict(l=0, r=0, t=30, b=0),
-        xaxis_title="Development Status",
-        yaxis_title="Index Score",
+        xaxis=dict(
+            title="Development Status",
+            title_font=dict(size=16, color='black', family="Arial", weight='bold'),  
+            tickfont=dict(color='black', size=14)
+        ),
+        yaxis=dict(
+            title="Index Score",
+            title_font=dict(size=16, color='black', family="Arial", weight='bold'),  
+            tickfont=dict(color='black', size=14),
+            gridcolor='darkgrey'  
+        ),
+        plot_bgcolor='white',  # Keep background clean
     )
 
     # Display the chart
