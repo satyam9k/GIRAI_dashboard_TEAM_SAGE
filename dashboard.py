@@ -513,14 +513,7 @@ with col3:
     ))
 
     # Update heatmap layout
-    # fig_heatmap.update_layout(
-    #     margin=dict(l=10, r=10, t=30, b=30), 
-    #     xaxis=dict(
-    #         title='Thematic Areas',
-    #         tickangle=45
-    #     ),
-    #     height=500,  
-    # )
+    
     fig_heatmap.update_layout(
         title=dict(
             text="Thematic Area Scores by Development Status",  # ✅ Title added
@@ -630,14 +623,45 @@ with col4:
             ))
 
     # Layout adjustments for spider chart
+    # fig_spider.update_layout(
+    #     polar=dict(
+    #         radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
+    #         angularaxis=dict(
+    #             rotation=247,  
+    #             direction="clockwise", 
+    #         ),
+    #         bgcolor='black'
+    #     ),
+    #     showlegend=True,
+    #     legend=dict(
+    #         yanchor="top",  
+    #         y=-0.1,          
+    #         xanchor="left",   
+    #         x=0.8             
+    #     ),
+    #     margin=dict(l=0, r=0, t=30, b=50)  
+    # )
     fig_spider.update_layout(
+        title=dict(
+            text="Key Metrics Comparison for Focus Countries",  # ✅ Title added
+            font=dict(size=20, color='black', family="Arial", weight='bold'),  # ✅ Title black & bold
+            x=0.5,  # Centered title
+            xanchor='center'
+        ),
         polar=dict(
-            radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
+            radialaxis=dict(
+                visible=True, 
+                range=[0, 100], 
+                gridcolor='darkgrey',  # ✅ Dark grey gridlines
+                showline=False,
+                tickfont=dict(color='black', size=12)  # ✅ Tick labels black
+            ),
             angularaxis=dict(
                 rotation=247,  
-                direction="clockwise", 
+                direction="clockwise",
+                tickfont=dict(color='black', size=12)  # ✅ Tick labels black
             ),
-            bgcolor='black'
+            bgcolor='white'  # ✅ White background
         ),
         showlegend=True,
         legend=dict(
@@ -646,7 +670,8 @@ with col4:
             xanchor="left",   
             x=0.8             
         ),
-        margin=dict(l=0, r=0, t=30, b=50)  
+        margin=dict(l=0, r=0, t=30, b=50),
+        plot_bgcolor='white'  # ✅ White background
     )
 
     # Render the chart
