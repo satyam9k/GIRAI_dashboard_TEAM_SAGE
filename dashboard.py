@@ -619,28 +619,13 @@ with col4:
                 name=country,
                 fill='toself',
                 line=dict(color=country_colors.get(country, 'grey')),
-                mode='lines+markers'
+                mode='lines+markers+text',
+                text=[f"{val:.1f}" for val in values],  # ✅ Format score labels (1 decimal)
+                textposition="top center",  # ✅ Position labels on top of points
+                textfont=dict(color='black', size=12)  # ✅ Labels in black for visibility
             ))
 
     # Layout adjustments for spider chart
-    # fig_spider.update_layout(
-    #     polar=dict(
-    #         radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
-    #         angularaxis=dict(
-    #             rotation=247,  
-    #             direction="clockwise", 
-    #         ),
-    #         bgcolor='black'
-    #     ),
-    #     showlegend=True,
-    #     legend=dict(
-    #         yanchor="top",  
-    #         y=-0.1,          
-    #         xanchor="left",   
-    #         x=0.8             
-    #     ),
-    #     margin=dict(l=0, r=0, t=30, b=50)  
-    # )
     fig_spider.update_layout(
         title=dict(
             text="Key Metrics Comparison for Focus Countries",  # ✅ Title added
