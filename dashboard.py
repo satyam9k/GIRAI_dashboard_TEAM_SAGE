@@ -305,12 +305,7 @@ with col2:
             )
         )
         
-    # fig_dev.update_layout(
-    #     showlegend=False,
-    #     margin=dict(l=0, r=0, t=30, b=0),
-    #     xaxis_title="Development Status",
-    #     yaxis_title="Index Score",
-    # )
+    
     fig_dev.update_layout(
         showlegend=False,
         margin=dict(l=0, r=0, t=50, b=0),  
@@ -398,18 +393,41 @@ with col5:
             marker=dict(color=bar_colors), 
             text=np.round(regional_avg.values, 2),  # Text inside the bars
             textposition='inside',  
-            textfont=dict(color='white'),  
+            textfont=dict(color='black', size=14),  
             hovertemplate='%{x}: %{y:.2f}<extra></extra>'  # Custom hover template (No extra text)
         )
     )
 
-    # Update layout for bar chart
+    # # Update layout for bar chart
+    # fig_regional.update_layout(
+    #     xaxis_title="Region",
+    #     yaxis_title="Average Index Score",
+    #     xaxis_tickangle=45,
+    #     margin=dict(l=0, r=0, t=30, b=0)
+    # )
     fig_regional.update_layout(
-        xaxis_title="Region",
-        yaxis_title="Average Index Score",
-        xaxis_tickangle=45,
-        margin=dict(l=0, r=0, t=30, b=0)
+        title=dict(
+            text="Region-wise Average Index Score",  # ✅ Title added
+            font=dict(size=20, color='black', family="Arial", weight='bold'),  # ✅ Title black & bold
+            x=0.5,  # Centered title
+            xanchor='center'
+        ),
+        xaxis=dict(
+            title="Region",
+            title_font=dict(size=16, color='black', family="Arial", weight='bold'),  # ✅ Axis label black & bold
+            tickfont=dict(color='black', size=14),
+            tickangle=45
+        ),
+        yaxis=dict(
+            title="Average Index Score",
+            title_font=dict(size=16, color='black', family="Arial", weight='bold'),  # ✅ Axis label black & bold
+            tickfont=dict(color='black', size=14),
+            gridcolor='darkgrey'  # ✅ Dark grey gridlines
+        ),
+        plot_bgcolor='white',  # Keep background clean
+        margin=dict(l=0, r=0, t=50, b=0)  # Adjusted top margin for title
     )
+
 
     # Display the chart
     st.plotly_chart(fig_regional, use_container_width=True)
