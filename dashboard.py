@@ -311,10 +311,15 @@ with col2:
     #     xaxis_title="Development Status",
     #     yaxis_title="Index Score",
     # )
-    
     fig_dev.update_layout(
         showlegend=False,
-        margin=dict(l=0, r=0, t=30, b=0),
+        margin=dict(l=0, r=0, t=50, b=0),  
+        title=dict(
+            text="AI Governance Across Development Stages",  
+            font=dict(size=20, color='black', family="Arial", weight='bold'),  
+            x=0.5,  # Centered title
+            xanchor='center'
+        ),
         xaxis=dict(
             title="Development Status",
             title_font=dict(size=16, color='black', family="Arial", weight='bold'),  
