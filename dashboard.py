@@ -290,7 +290,7 @@ with col2:
                 marker=dict(color='black', size=10),
                 text=[f"Avg: {avg:.2f}"],
                 textposition='top right',
-                textfont=dict(color='black', size=14),
+                textfont=dict(color='white', size=14),
                 hovertemplate=(
                     'Development Status: %{x}<br>'
                     'Min: %{customdata[0]:.2f}<br>'
@@ -307,25 +307,9 @@ with col2:
     
     fig_dev.update_layout(
         showlegend=False,
-        margin=dict(l=0, r=0, t=50, b=0),  
-        title=dict(
-            text="AI Governance Across Development Stages",  
-            font=dict(size=20, color='black', family="Arial", weight='bold'),  
-            x=0.5,  # Centered title
-            xanchor='center'
-        ),
-        xaxis=dict(
-            title="Development Status",
-            title_font=dict(size=16, color='black', family="Arial", weight='bold'),  
-            tickfont=dict(color='black', size=14)
-        ),
-        yaxis=dict(
-            title="Index Score",
-            title_font=dict(size=16, color='black', family="Arial", weight='bold'),  
-            tickfont=dict(color='black', size=14),
-            gridcolor='darkgrey'  
-        ),
-        plot_bgcolor='white',  # Keep background clean
+        margin=dict(l=0, r=0, t=30, b=0),
+        xaxis_title="Development Status",
+        yaxis_title="Index Score",
     )
 
     # Display the chart
