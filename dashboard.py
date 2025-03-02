@@ -472,39 +472,21 @@ with col3:
         y=thematic_by_development.index,
         text=np.round(thematic_by_development.values, 2),
         texttemplate='%{text}',  # This keeps the text labels in the heatmap
-        textfont={"color": "black","size": 10},
+        textfont={"color": "white","size": 10},
         colorscale='RdBu',
         showscale=True,
         hoverongaps=False,
         hovertemplate="Thematic Area: %{x}<br>Development Status: %{y}<br>Score: %{z:.2f}<extra></extra>"  # This removes the duplicate z-value
     ))
 
-    # Update heatmap layout
-    
+   # Update heatmap layout
     fig_heatmap.update_layout(
-        title=dict(
-            text="Thematic Area Scores by Development Status",  # ✅ Title added
-            font=dict(size=20, color='black', family="Arial", weight='bold'),  # ✅ Title black & bold
-            x=0.5,  # Centered title
-            xanchor='center'
-        ),
+        margin=dict(l=10, r=10, t=30, b=30), 
         xaxis=dict(
-            title="Thematic Areas",
-            title_font=dict(size=16, color='black', family="Arial", weight='bold'),  # ✅ Axis label black & bold
-            tickfont=dict(color='black', size=12),
-            tickangle=45,
-            showgrid=True,
-            gridcolor='darkgrey'  # ✅ Dark grey gridlines
+            title='Thematic Areas',
+            tickangle=45
         ),
-        yaxis=dict(
-            title="Development Status",
-            title_font=dict(size=16, color='black', family="Arial", weight='bold'),  # ✅ Axis label black & bold
-            tickfont=dict(color='black', size=12),
-            showgrid=True,
-            gridcolor='darkgrey'  # ✅ Dark grey gridlines
-        ),
-        height=500,
-        plot_bgcolor='white'  # Keep background clean
+        height=500,  
     )
 
     # Display the heatmap
