@@ -569,33 +569,21 @@ with col4:
                 fill='toself',
                 line=dict(color=country_colors.get(country, 'grey')),
                 mode='lines+markers+text',
-                text=[f"{val:.1f}" for val in values],  # ✅ Format score labels (1 decimal)
-                textposition="top center",  # ✅ Position labels on top of points
-                textfont=dict(color='black', size=12)  # ✅ Labels in black for visibility
+                text=[f"{val:.1f}" for val in values],  
+                textposition="top center", 
+                textfont=dict(color='white', size=12)  
             ))
 
+    
     # Layout adjustments for spider chart
     fig_spider.update_layout(
-        title=dict(
-            text="Key Metrics Comparison for Focus Countries",  # ✅ Title added
-            font=dict(size=20, color='black', family="Arial", weight='bold'),  # ✅ Title black & bold
-            x=0.5,  # Centered title
-            xanchor='center'
-        ),
         polar=dict(
-            radialaxis=dict(
-                visible=True, 
-                range=[0, 100], 
-                gridcolor='darkgrey',  # ✅ Dark grey gridlines
-                showline=False,
-                tickfont=dict(color='black', size=12)  # ✅ Tick labels black
-            ),
+            radialaxis=dict(visible=True, range=[0, 100], gridcolor='grey', showline=False),
             angularaxis=dict(
                 rotation=247,  
-                direction="clockwise",
-                tickfont=dict(color='black', size=12)  # ✅ Tick labels black
+                direction="clockwise", 
             ),
-            bgcolor='white'  # ✅ White background
+            bgcolor='black'
         ),
         showlegend=True,
         legend=dict(
@@ -604,8 +592,7 @@ with col4:
             xanchor="left",   
             x=0.8             
         ),
-        margin=dict(l=0, r=0, t=30, b=50),
-        plot_bgcolor='white'  # ✅ White background
+        margin=dict(l=0, r=0, t=30, b=50)  
     )
 
     # Render the chart
