@@ -34,21 +34,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-# Force light mode using CSS
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: white !important;
-        color: black !important;
-    }
-    .centered-title, .centered-text {
-        color: black !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 st.markdown(
     """
     <div class="centered-title">
