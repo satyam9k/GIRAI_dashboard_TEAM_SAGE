@@ -472,7 +472,7 @@ with col3:
         y=thematic_by_development.index,
         text=np.round(thematic_by_development.values, 2),
         texttemplate='%{text}',  # This keeps the text labels in the heatmap
-        textfont={"color": "black","size": 10}, ##changed here
+        textfont={"color": "black","size": 14}, ##changed here
         colorscale='RdBu',
         showscale=True,
         hoverongaps=False,
