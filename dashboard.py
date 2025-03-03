@@ -476,6 +476,7 @@ with col3:
         colorscale='RdBu',
         showscale=True,
         hoverongaps=False,
+        xaxis_tickangle=45,#########################
         hovertemplate="Thematic Area: %{x}<br>Development Status: %{y}<br>Score: %{z:.2f}<extra></extra>"  # This removes the duplicate z-value
     ))
 
