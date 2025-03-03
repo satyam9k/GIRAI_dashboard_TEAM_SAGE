@@ -405,7 +405,7 @@ with col3:
             font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
             font-weight: bold; /* Bold text */
             font-size: 32px; /* Adjust font size */
-            color: white; /* Text color */
+            color: black; /* Text color */
         }
         </style>
         """,
