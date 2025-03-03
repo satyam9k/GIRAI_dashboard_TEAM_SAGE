@@ -472,19 +472,35 @@ with col3:
         y=thematic_by_development.index,
         text=np.round(thematic_by_development.values, 2),
         texttemplate='%{text}',  # This keeps the text labels in the heatmap
-        textfont={"color": "white","size": 10},
+        textfont={"color": "black","size": 10}, ##changed here
         colorscale='RdBu',
         showscale=True,
         hoverongaps=False,
         hovertemplate="Thematic Area: %{x}<br>Development Status: %{y}<br>Score: %{z:.2f}<extra></extra>"  # This removes the duplicate z-value
     ))
 
-   # Update heatmap layout
+   # # Update heatmap layout
+   #  fig_heatmap.update_layout(
+   #      margin=dict(l=10, r=10, t=30, b=30), 
+   #      xaxis=dict(
+   #          title='Thematic Areas',
+   #          tickangle=45
+   #      ),
+   #      height=500,  
+   #  )
+    # Update heatmap layout
     fig_heatmap.update_layout(
         margin=dict(l=10, r=10, t=30, b=30), 
         xaxis=dict(
             title='Thematic Areas',
-            tickangle=45
+            title_font=dict(size=14, color="black", family="Arial", weight="bold"),  # Bold and black
+            tickangle=45,
+            tickfont=dict(color="black", family="Arial", size=12)  # Axis tick labels black
+        ),
+        yaxis=dict(
+            title='Development Status',
+            title_font=dict(size=14, color="black", family="Arial", weight="bold"),  # Bold and black
+            tickfont=dict(color="black", family="Arial", size=12)  # Axis tick labels black
         ),
         height=500,  
     )
