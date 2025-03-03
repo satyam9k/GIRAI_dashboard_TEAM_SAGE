@@ -405,7 +405,7 @@ with col3:
             font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
             font-weight: bold; /* Bold text */
             font-size: 32px; /* Adjust font size */
-            color: black; /* Text color */
+            color: white; /* Text color */
         }
         </style>
         """,
@@ -478,40 +478,6 @@ with col3:
         hoverongaps=False,
         hovertemplate="Thematic Area: %{x}<br>Development Status: %{y}<br>Score: %{z:.2f}<extra></extra>"  # This removes the duplicate z-value
     ))
-
-   # # Update heatmap layout
-   #  fig_heatmap.update_layout(
-   #      margin=dict(l=10, r=10, t=30, b=30), 
-   #      xaxis=dict(
-   #          title='Thematic Areas',
-   #          tickangle=45
-   #      ),
-   #      height=500,  
-   #  )
-    # Update heatmap layout
-    fig_heatmap.update_layout(
-        title={
-            'text': "<b>Thematic Area Scores by Development Status</b>",
-            'y': 0.98,
-            'x': 0.5,
-            'xanchor': 'center',
-            'yanchor': 'top',
-            'font': dict(size=20, color="black", family="Arial", weight="bold")  # Black & Bold Title
-        },
-        margin=dict(l=10, r=10, t=50, b=30), 
-        xaxis=dict(
-            title='<b>Thematic Areas</b>',
-            title_font=dict(size=14, color="black", family="Arial", weight="bold"),  # Bold & black
-            tickangle=45,
-            tickfont=dict(color="black", family="Arial", size=12)  # Axis tick labels black
-        ),
-        yaxis=dict(
-            title='<b>Development Status</b>',
-            title_font=dict(size=14, color="black", family="Arial", weight="bold"),  # Bold & black
-            tickfont=dict(color="black", family="Arial", size=12)  # Axis tick labels black
-        ),
-        height=500,  
-    )
 
 # Display the heatmap
     st.plotly_chart(fig_heatmap, use_container_width=True)
