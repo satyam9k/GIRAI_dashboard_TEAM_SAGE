@@ -513,6 +513,9 @@ with col3:
         height=500,  
     )
 
+# Display the heatmap
+    st.plotly_chart(fig_heatmap, use_container_width=True)
+
 
 # 4. Key Metrics Comparison
 
