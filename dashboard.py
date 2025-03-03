@@ -394,7 +394,6 @@ with col5:
     # Display the chart
     st.plotly_chart(fig_regional, use_container_width=True)
 
-
 # 3. Thematic Focus by Development Status
 with col3:
     st.markdown(
@@ -449,6 +448,7 @@ with col3:
     )
 
     development_analysis = development_analysis[development_analysis['Development_Status'] != "Other"]
+    
     ordered_status = ['Developed', 'Developing', 'Underdeveloped']
     development_analysis['Development_Status'] = pd.Categorical(
         development_analysis['Development_Status'],
@@ -472,16 +472,112 @@ with col3:
         y=thematic_by_development.index,
         text=np.round(thematic_by_development.values, 2),
         texttemplate='%{text}',  # This keeps the text labels in the heatmap
-        textfont={"color": "white","size": 10}, 
+        textfont={"size": 10},
         colorscale='RdBu',
         showscale=True,
         hoverongaps=False,
-        xaxis_tickangle=45,#########################
-        hovertemplate="Thematic Area: %{x}<br>Development Status: %{y}<br>Score: %{z:.2f}<extra></extra>"  # This removes the duplicate z-value
+        hovertemplate="Thematic Area: %{x}<br>Development Status: %{y}<br>Score: %{z:.2f}<extra></extra>"  # Removes duplicate z-value
     ))
 
-# Display the heatmap
+    # Update heatmap layout
+    fig_heatmap.update_layout(
+        margin=dict(l=10, r=10, t=30, b=30), 
+        xaxis=dict(
+            title='Thematic Areas',
+            tickangle=45
+        ),
+        height=500,
+    )
+
+    # Display the heatmap
     st.plotly_chart(fig_heatmap, use_container_width=True)
+
+# # 3. Thematic Focus by Development Status
+# with col3:
+#     st.markdown(
+#         """
+#         <style>
+#         .times-title {
+#             text-align: center;
+#             font-family: 'Times New Roman', Times, serif; /* Apply Times New Roman font */
+#             font-weight: bold; /* Bold text */
+#             font-size: 32px; /* Adjust font size */
+#             color: white; /* Text color */
+#         }
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#     )
+
+#     st.markdown(
+#         """
+#         <div class="times-title">
+#             Thematic Area Scores by Development Status
+#         </div>
+#         """,
+#         unsafe_allow_html=True
+#     )
+
+#     # Add vertical spacing above the heatmap to move it down
+#     st.markdown("<div style='height: 60px;'></div>", unsafe_allow_html=True)
+
+#     # Define thematic areas
+#     thematic_areas_to_include = [
+#         "Access to Remedy and Redress",
+#         "Children's Rights",
+#         "Data Protection and Privacy",
+#         "Gender Equality",
+#         "International Cooperation",
+#         "Labour Protection and Right to Work",
+#         "National AI Policy",
+#         "Public Participation and Awareness",
+#         "Responsibility and Accountability",
+#         "Transparency and Explainability"
+#     ]
+
+#     # Filter the data
+#     filtered_data = data_df[data_df['thematic_area'].isin(thematic_areas_to_include)]
+
+#     # Merge and process the data
+#     development_analysis = filtered_data.merge(
+#         rankings_df[['Country', 'Development_Status']],
+#         left_on='country',
+#         right_on='Country'
+#     )
+
+#     development_analysis = development_analysis[development_analysis['Development_Status'] != "Other"]
+#     ordered_status = ['Developed', 'Developing', 'Underdeveloped']
+#     development_analysis['Development_Status'] = pd.Categorical(
+#         development_analysis['Development_Status'],
+#         categories=ordered_status,
+#         ordered=True
+#     )
+
+#     # Pivot table for heatmap
+#     thematic_by_development = pd.pivot_table(
+#         development_analysis,
+#         values='ta_score',
+#         index='Development_Status',
+#         columns='thematic_area',
+#         aggfunc='mean'
+#     )
+
+#     # Create the heatmap
+#     fig_heatmap = go.Figure(data=go.Heatmap(
+#         z=thematic_by_development.values,
+#         x=thematic_by_development.columns,
+#         y=thematic_by_development.index,
+#         text=np.round(thematic_by_development.values, 2),
+#         texttemplate='%{text}',  # This keeps the text labels in the heatmap
+#         textfont={"color": "white","size": 10}, 
+#         colorscale='RdBu',
+#         showscale=True,
+#         hoverongaps=False,
+#         hovertemplate="Thematic Area: %{x}<br>Development Status: %{y}<br>Score: %{z:.2f}<extra></extra>"  # This removes the duplicate z-value
+#     ))
+
+# # Display the heatmap
+#     st.plotly_chart(fig_heatmap, use_container_width=True)
 
 
 # 4. Key Metrics Comparison
